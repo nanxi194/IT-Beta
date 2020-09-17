@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Hello World!</title>
+</head>
+<body>
+<h1 th:inline="text">EDIT YOUR FILE</h1>
+
+<div th:if="${type} == 'image'">
+    <img th:src="${src}">
+</div>
+<div th:if="${type} == 'audio'">
+    <audio controls src th:src="${src}">
+    </audio>
+</div>
+<div th:if="${type} == 'video'">
+    <video width="320" height="240" controls>
+        <source th:src="${src}">
+    </video>
+</div>
+<div th:if="${type} == 'document'">
+    <embed th:src="${src}" width="600" height="500" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
+</div>
+
+<form th:action="@{/delete}" method="post" enctype="utf8">
+    <input type="submit" value="Change">
+</form>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/settings}" th:object="${userSettings}" method="post" enctype="utf8">
+    <div>
+        <label>Choose profile visibility:</label>
+        <select th:field="*{privacy}">
+            <option value="private">Private</option>
+            <option value="public">Visible to all</option>
+        </select>
+    </div>
+
+    <input type="submit" value="Change">
+
+
+</form>
+
+<a th:href="@{/hello}" class="blue">Go back to home page</a>
+
+<div th:if="${message}">
+    <h2 th:text="${message}"/>
+</div>
+</body>
+</html>

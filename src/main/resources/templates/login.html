@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <link th:href="@{css/userRegistration.css}" rel="stylesheet" type="text/css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+
+<body>
+<div class="wrap">
+    <div class="container">
+        <h1>Log in to your account</h1>
+        <div th:if="${message}">
+            <h2 th:text="${message}"/>
+        </div>
+        <h2 th:if="${param.error}">
+            Incorrect email or password.
+        </h2>
+        <h2 th:if="${param.logout}">
+            You have been logged out.
+        </h2>
+
+        <form th:action="@{/login}" method="post">
+            <div>
+                <label for="username">
+                    <input type="username"  placeholder="username" id="username" name="username" required>
+                </label>
+            </div>
+
+            <div>
+                <label for="password">
+                    <input type="password" placeholder="Your password" id="password" name="password" required>
+                </label>
+            </div>
+
+            <input type="submit" value="LOGIN">
+
+            <p class="change_link" style="text-align: center">
+                <span class="text">Don't have an account?</span>
+                <a href="registration" class="blue">Create one</a>
+            </p>
+
+            <div>
+                <p class="change_link text" style="text-align: center; font-size: 14px">
+                    IT project ©️2020-2020
+                </p>
+            </div>
+
+        </form>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+

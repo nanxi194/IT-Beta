@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link th:href="@{/css/profile.css}" rel="stylesheet" type="text/css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+
+<div>
+    <nav class="navbar sticky-top navbar-expand-lg" style="background-color: #4E5D6B">
+
+        <a class="navbar-brand text-white" th:href="@{/hello}">
+            <i class="fas fa-less-than" style="padding: 5px; color:white"></i>
+        </a>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+
+                <a th:href="@{/settings}">
+                    <i class="fas fa-cog" style="padding: 5px; color:white"></i>
+                </a>
+
+                <a th:href="@{/home}">
+                    <i class="fas fa-home" style="padding: 5px; color:white"></i>
+                </a>
+
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Log out"/>
+                </form>
+
+            </div>
+        </div>
+
+    </nav>
+
+        <div class="main">
+            <h1>
+                <p th:inline="text">[[${#httpServletRequest.remoteUser}]]</p>
+            </h1>
+            <h2>PORTFOLIO</h2>
+
+        <div id="myBtnContainer" class="btn_group">
+            <p class="btn" onclick="filterSelection('all')"> Homepage</p>
+            <p class="btn" onclick="filterSelection('images')"> Photos</p>
+            <p class="btn" onclick="filterSelection('audio')"> Audios</p>
+            <p class="btn" onclick="filterSelection('video')"> Videos</p>
+            <p class="btn" onclick="filterSelection('documents')"> Documents</p>
+            <p class="btn" onclick="filterSelection('download')"> Download</p>
+            <p class="btn" onclick="filterSelection('about_me')"> About me</p>
+        </div>
+
+            <div class="row">
+
+                <div class="column images">
+                    <div class="container">
+                            <div th:each="index: ${#numbers.sequence(0, imageIDs.size()-1, 3)}">
+                                <div class="row">
+                                <div class = "col hover-shadow cursor" onclick="openModal();">
+                                <img th:src="@{/image/{username}/{id}(username=${#authentication.name}, id=${imageIDs.get(index)})}" alt="Images" style="width:100%">
+                                </div>
+                                <div class = "col cursor" onclick="openModal();">
+                                <img th:if="${(index + 1) < imageIDs.size()}" class = "col " th:src="@{/image/{username}/{id}(username=${#authentication.name}, id=${imageIDs.get(index+1)})}" alt="Images" style="width:100%">
+                                </div>
+                                <div class = "col cursor" onclick="openModal();">
+                                <img th:if="${(index + 2) < imageIDs.size()}" class = "col " th:src="@{/image/{username}/{id}(username=${#authentication.name}, id=${imageIDs.get(index+2)})}" alt="Images" style="width:100%">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="myModal" class="modal">
+                            <div class="modal-content">
+                                <div class="mySlides">
+                                    <div th:each="imageid : ${imageIDs}">
+                                    <img th:src="@{/image/{username}/{id}(username=${#authentication.name}, id=${imageid})}" alt="Images" style="width:100%">
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+
+                <div class="column audio">
+                    <div class="container">
+                        <div th:each="index: ${#numbers.sequence(0, audioIDs.size()-1, 3)}">
+                            <div class="row row-cols-3">
+                                <div class = "col">
+                                    <audio controls src th:src="@{/audio/{username}/{id}(username=${#authentication.name}, id=${audioIDs.get(index)})}" alt="Audio" style="width:100%"></audio>
+                                </div>
+                                <div class = "col">
+                                    <audio th:if="${(index + 1) < audioIDs.size()}" controls src th:src="@{/audio/{username}/{id}(username=${#authentication.name}, id=${audioIDs.get(index+1)})}" alt="Audio" style="width:100%"></audio>
+                                </div>
+                                <div class = "col">
+                                    <audio th:if="${(index + 2) < audioIDs.size()}" controls src th:src="@{/audio/{username}/{id}(username=${#authentication.name}, id=${audioIDs.get(index+2)})}" alt="Audio" style="width:100%"></audio>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column video">
+                    <div class="container">
+                        <div th:each="index: ${#numbers.sequence(0, videoIDs.size()-1, 3)}">
+                            <div class="row row-cols-3">
+                                <div class = "col">
+                                    <video width="320" height="240" controls>
+                                        <source th:src="@{/video/{username}/{id}(username=${#authentication.name}, id=${videoIDs.get(index)})}" alt="Video">
+                                    </video>
+                                </div>
+                                <div class = "col">
+                                    <video th:if="${(index + 1) < videoIDs.size()}" width="320" height="240" controls>
+                                        <source th:src="@{/video/{username}/{id}(username=${#authentication.name}, id=${videoIDs.get(index+1)})}" alt="Video">
+                                    </video>
+                                </div>
+                                <div class = "col">
+                                    <video th:if="${(index + 2) < videoIDs.size()}" width="320" height="240" controls>
+                                        <source th:src="@{/video/{username}/{id}(username=${#authentication.name}, id=${videoIDs.get(index+2)})}" alt="Video">
+                                    </video>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column documents">
+                        <p th:each="doc : ${docs}">
+                            <embed th:src="@{/document/{username}/{id}(username=${#authentication.name}, id=${doc.key})}" width="600" height="500" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
+                        </p>
+                </div>
+                <div class="column about_me"></div>
+
+            </div>
+
+            </div>
+        </div>
+
+
+
+
+    <script>
+        filterSelection("all")
+        function filterSelection(c) {
+            let x, i;
+            x = document.getElementsByClassName("column");
+            if (c == "all") c = "images";
+            for (i = 0; i < x.length; i++) {
+                RemoveClass(x[i], "show");
+                if (x[i].className.indexOf(c) > -1) AddClass(x[i], "show");
+            }
+        }
+
+        function AddClass(element, name) {
+            let i, arr1, arr2;
+            arr1 = element.className.split(" ");
+            arr2 = name.split(" ");
+            for (i = 0; i < arr2.length; i++) {
+                if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+            }
+        }
+
+        function RemoveClass(element, name) {
+            let i, arr1, arr2;
+            arr1 = element.className.split(" ");
+            arr2 = name.split(" ");
+            for (i = 0; i < arr2.length; i++) {
+                while (arr1.indexOf(arr2[i]) > -1) {
+                    arr1.splice(arr1.indexOf(arr2[i]), 1);
+                }
+            }
+            element.className = arr1.join(" ");
+        }
+
+        let btnContainer = document.getElementById("myBtnContainer");
+        let btns = btnContainer.getElementsByClassName("btn");
+        for (let i = 0; i < btns.length; i++) {
+            btns[i].addEventListener("click", function(){
+                let current = document.getElementsByClassName("active");
+                current[0].className = current[0].className.replace(" active", "");
+                this.className += " active";
+            });
+        }
+
+        function openModal() {
+            document.getElementById("myModal").style.display = "block";
+        }
+
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[slideIndex-1].style.display = "block";
+        }
+
+        $(document).mouseup(function(e) {
+            if ($(e.target).parents('.modal-content').length == 0 && !$(e.target).is('.modal-content')) {
+                $('.modal').css('display', 'none');
+            }
+        });
+
+    </script>
+
+
+
+</body>
+</html>
