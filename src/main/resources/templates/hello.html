@@ -4,15 +4,24 @@
 <head>
     <title>Hello World!</title>
 </head>
+
 <body>
 <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-<a href="upload">Upload Files Here</a>
+
 
 <a th:href="@{/user/{username}(username=${#authentication.name})}">Profile</a>
 
-<a th:href="@{/settings}">Settings</a>
+
+
+<a th:href="@{/choose}">choose template</a>
+
+
+
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>
+
+
+
 </form>
 </body>
 </html>
