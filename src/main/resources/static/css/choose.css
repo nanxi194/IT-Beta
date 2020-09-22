@@ -1,0 +1,19 @@
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+    margin: 0;
+}
+
+
+.navbar-nav input[type="submit"] {
+    background: transparent;
+    height: 28px;
+    width: 70px;
+    vertical-align: middle;
+    padding: 0;
+    border: none;
+    color: white;
+}

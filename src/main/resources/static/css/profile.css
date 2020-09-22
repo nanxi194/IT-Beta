@@ -90,13 +90,15 @@ h2 {
 
 }
 
-input{
-    border-radius: 2px;
+input[type="submit"] {
+    background: transparent;
+    height: 28px;
+    width: 70px;
+    vertical-align: middle;
+    padding: 0;
     border: none;
-    background-color: #4E5D6B;
     color: white;
 }
-
 
 
 .modal {
