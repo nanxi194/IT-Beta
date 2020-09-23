@@ -54,21 +54,19 @@
     <section class = "choose">
         <div class="row">
             <div class="col span-1of-2 textbox">
-                <img class="img1"  th:src="@{images/account-img.png}" alt="account photo">
+                <a th:href="@{/user/{username}(username=${#authentication.name})}">
+                    <img class="img1"  th:src="@{images/account-img.png}" alt="account photo">
+                </a>
                 <h2 style="color:#2474A6">Portfolio</h2>
                 <p>Go to your Profilo</p>
-                <a th:href="@{/user/{username}(username=${#authentication.name})}">
-                    <button class="button" >GO</button>
-                </a>
             </div>
 
             <div class="col span-1of-2 textbox">
-                <img class="img1"  th:src="@{images/template.png}" alt="tempalte">
+                <a th:href="@{/choose}">
+                    <img class="img1"  th:src="@{images/template.png}" alt="tempalte">
+                </a>
                 <h2 style="color:#2474A6">Template</h2>
                 <p>Create a new site with Template</p>
-                <a th:href="@{/choose}">
-                    <button class="button" >GO</button>
-                </a>
             </div>
         </div>
 
