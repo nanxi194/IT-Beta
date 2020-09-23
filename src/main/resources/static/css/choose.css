@@ -4,6 +4,7 @@
 
 body {
     margin: 0;
+    font-family: 'Roboto', sans-serif;
 }
 
 .navbar-nav input[type="submit"] {
@@ -27,7 +28,7 @@ h2 {
     margin: 5px 50px 70px 150px;
     font-size: 25px;
     text-align: left;
-    color: black;
+    color: #2474a6;
 }
 
 .img1 {
