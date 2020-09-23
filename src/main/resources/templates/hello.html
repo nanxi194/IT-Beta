@@ -2,26 +2,116 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Hello World!</title>
+    <link href="/your-path-to-fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link th:href="@{css/dashboard.css}" rel="stylesheet" type="text/css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page</title>
 </head>
 
 <body>
-<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+
+<div class="wrapper">
+    <nav class="navbar sticky-top navbar-expand-lg" style="background-color: #2474A6">
+
+        <a class="navbar-brand text-white" th:href="@{/home}">
+            <i class="fas fa-less-than" style="padding: 5px; color:white"></i>
+        </a>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+
+                <a th:href="@{/settings}">
+                    <i class="fas fa-cog" style="padding: 5px; color:white"></i>
+                </a>
+
+                <a th:href="@{/home}">
+                    <i class="fas fa-home" style="padding: 5px; color:white"></i>
+                </a>
 
 
-<a th:href="@{/user/{username}(username=${#authentication.name})}">Profile</a>
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Log out"/>
+                </form>
+
+            </div>
+        </div>
+
+    </nav>
 
 
 
-<a th:href="@{/choose}">choose template</a>
+
+
+    <section class = "choose">
+        <div class="row">
+            <div class="col span-1of-2 textbox">
+                <img class="img1"  th:src="@{images/account-img.png}" alt="account photo">
+                <h2 style="color:#2474A6">Portfolio</h2>
+                <p>Go to your Profilo</p>
+                <a th:href="@{/user/{username}(username=${#authentication.name})}">
+                    <button class="button" >GO</button>
+                </a>
+            </div>
+
+            <div class="col span-1of-2 textbox">
+                <img class="img1"  th:src="@{images/template.png}" alt="tempalte">
+                <h2 style="color:#2474A6">Template</h2>
+                <p>Create a new site with Template</p>
+                <a th:href="@{/choose}">
+                    <button class="button" >GO</button>
+                </a>
+            </div>
+        </div>
+
+    </section>
 
 
 
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
+    <footer>
+        <div class="row">
+            <div class="col span-1-of-2">
+                <ul class="footer-nav">
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">iOS App</a></li>
+                    <li><a href="#">Android App</a></li>
+                </ul>
+            </div>
+            <div class="col span-1-of-2">
+                <ul class="social-links">
+                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fab fa-google"></i></a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <p>
+                Promote your business, showcase your art, set up an online shop or just test out new ideas. The ITPROJECT website builder has everything you need to create a fully personalized, high-quality free website.<br>
+
+                © 2006-2020 ITPROJECT.com, Inc
+            </p>
+
+        </div>
+    </footer>
 
 
 
-</form>
+
+
+
+</div>
+
 </body>
 </html>

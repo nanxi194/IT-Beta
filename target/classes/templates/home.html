@@ -21,29 +21,26 @@
 <body>
 
 <div class="wrapper">
-    <nav class="navbar navbar-expand-lg navbar-light " id="nav-bar">
-        <a class="ITPROJECT" size="30px" href="#">ITPROJECT</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <nav>
+        <div class="nav-bar">
+    <div class="topnav">
+        <a class="logo"  href="home"><img th:src="@{images/logo.png}" alt="logo"></a>
+        <a href="template">TEMPLATES  <i class="fa fa-angle-down" aria-hidden="true"></i>
+        </a>
+        <a href="hello">EXPLORE  <i class="fa fa-angle-down" aria-hidden="true"></i>
+        </a>
 
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">TEMPLATES</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">EXPLORE</a>
-                </li>
-
-            </ul>
-
-            <button class="nav-login-b" style="font-family: Roboto; color:#2474A6">LOG IN</button>
-            <button class="nav-register-b" style="font-family: Roboto; color:white">SIGN UP</button>
-
-
+        <div class="topnav-right">
+            <a th:href="@{/login}">
+                <button href="login" class="nav-login-b" style=" color:#2474A6;" >LOG IN</button>
+            </a>
+            <a th:href="@{/registration}">
+                <button href="registration" class="nav-register-b" style="color:white;" >SIGN UP</button>
+            </a>
         </div>
+    </div>
+        </div>
+
     </nav>
 
 
@@ -65,26 +62,20 @@
             </div>
         </div>
 
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
     </div>
 
 
     <section class="block1">
         <div class="row">
             <div class="col span-1of-2 textbox">
-                <h2>The Freedom <br>to Create the <br>Websites You Want<h2/>
+                <h2>The Freedom <br>to Create the <br>Websites You Want</h2>
             </div>
 
             <div class="col span-1of-2 textbox">
                 <p>Design and build your own high-quality websites. <br>Whether you’re promoting your business, showcasing your work, opening your store or starting a blog</p>
+                <a th:href="login">
                 <button class="button" >GET START</button>
+                </a>
             </div>
         </div>
 
@@ -95,12 +86,14 @@
         <div class="row">
             <div class="col span-1of-2 textbox">
                 <h1>Build Your<br>Unique Online <br>Presence </h1>
+                <a th:href="login">
                 <button class="button" >GET START</button>
+                </a>
             </div>
 
 
             <div class="col span-1of-2 textbox">
-                <h3 style="font-weight: bold;">To create your own website, follow these steps: <h3/>
+                <h3 style="font-weight: bold;">To create your own website, follow these steps: </h3>
                     <div class="works-step clearfix">
                         <p>Customize your site</p>
                     </div>
