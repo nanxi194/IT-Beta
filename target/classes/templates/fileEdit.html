@@ -23,7 +23,7 @@
     <embed th:src="${src}" width="600" height="500" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
 </div>
 
-<form th:action="@{/delete}" method="post" enctype="utf8">
+<form th:action="@{${#httpServletRequest.requestURI}}" method="post" enctype="utf8">
     <input type="submit" value="Change">
 </form>
 

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -64,9 +66,14 @@ public class FileEditController {
 
     }
 
-    @PostMapping("/delete")
-    public String deleteFile(){
-        return "hello";
+    @PostMapping("/file/edit/{id}")
+    public String deleteFile(@PathVariable String id, Principal principal){
+
+        DatabaseFile databaseFile = databaseFileRepository.findById(Long.parseLong(id));
+
+        databaseFileRepository.delete(databaseFile);
+
+        return "redirect:/user/" + principal.getName();
     }
 
 }

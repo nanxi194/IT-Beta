@@ -15,11 +15,13 @@ public class FileStorageService {
     @Autowired
     private DatabaseFileRepository databaseFileRepository;
 
-    public void storeFile(MultipartFile file, String username) throws IOException {
+    public DatabaseFile storeFile(MultipartFile file, String username, String description) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
-        DatabaseFile databaseFile = new DatabaseFile(fileName, file.getContentType(), file.getBytes(), username);
+        DatabaseFile databaseFile = new DatabaseFile(fileName, file.getContentType(), file.getBytes(), username, description);
 
         databaseFileRepository.save(databaseFile);
+
+        return databaseFile;
     }
 }

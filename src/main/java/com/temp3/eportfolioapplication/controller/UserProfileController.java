@@ -1,8 +1,10 @@
 package com.temp3.eportfolioapplication.controller;
 
 import com.temp3.eportfolioapplication.model.DatabaseFile;
+import com.temp3.eportfolioapplication.model.Project;
 import com.temp3.eportfolioapplication.model.User;
 import com.temp3.eportfolioapplication.repository.DatabaseFileRepository;
+import com.temp3.eportfolioapplication.repository.ProjectRepository;
 import com.temp3.eportfolioapplication.repository.UserRepository;
 import com.temp3.eportfolioapplication.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class UserProfileController {
 
     @Autowired
     DatabaseFileRepository databaseFileRepository;
+
+    @Autowired
+    ProjectRepository projectRepository;
 
     @Autowired
     ImageService imageService;
@@ -87,6 +92,22 @@ public class UserProfileController {
             }
         }
 
+        Iterable<Project> projects = projectRepository.findAllByUsername(username);
+
+        List<Long> projectList = new ArrayList<>();
+
+        List<Long> displayList = new ArrayList<>();
+
+        for(Project project: projects){
+            projectList.add(project.getId());
+            if(project.getDisplay() != null){
+                displayList.add(project.getId());
+            }
+            else{
+                displayList.add((long) 0);
+            }
+        }
+
         model.addAttribute("imageIDs", imageList);
 
         model.addAttribute("audioIDs", audioList);
@@ -94,6 +115,20 @@ public class UserProfileController {
         model.addAttribute("videoIDs", videoList);
 
         model.addAttribute("docs", docMap);
+
+        model.addAttribute("projectIDs", projectList);
+
+        model.addAttribute("displayIDs", displayList);
+
+        boolean showEdit = false;
+
+        if(principal != null){
+            if(principal.getName().equals(username)){
+                showEdit = true;
+            }
+        }
+
+        model.addAttribute("showEdit", showEdit);
 
         return "profile";
     }
