@@ -19,4 +19,9 @@ public class ImageController {
     public void getUserImage(@PathVariable String username, @PathVariable String id, HttpServletResponse response) throws IOException {
         imageService.writeImageToResponse(Long.parseLong(id), response);
     }
+
+    @GetMapping("/user/{username}/picture")
+    public void getProfilePicture(@PathVariable String username, HttpServletResponse response) throws IOException {
+        imageService.writeProfilePicToResponse(username, response);
+    }
 }

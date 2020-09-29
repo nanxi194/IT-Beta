@@ -28,6 +28,9 @@ public class User {
 
     private String privacy;
 
+    @OneToOne(cascade = {CascadeType.ALL})
+    private UserInfo userInfo;
+
     public User(String firstName, String lastName, String email, String username, String password){
         this.firstName = firstName;
         this.lastName = lastName;

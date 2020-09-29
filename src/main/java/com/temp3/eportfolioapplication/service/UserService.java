@@ -2,6 +2,8 @@ package com.temp3.eportfolioapplication.service;
 
 import com.temp3.eportfolioapplication.model.User;
 import com.temp3.eportfolioapplication.model.UserDto;
+import com.temp3.eportfolioapplication.model.UserInfo;
+import com.temp3.eportfolioapplication.repository.UserInfoRepository;
 import com.temp3.eportfolioapplication.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,10 +22,19 @@ public class UserService {
     UserRepository userRepository;
 
     @Autowired
+    UserInfoRepository userInfoRepository;
+
+    @Autowired
     UserDetailsServiceImpl userDetailsService;
 
     public User registerNewUser(UserDto userDto){
         User newUser = new User(userDto);
+
+        UserInfo userInfo = new UserInfo(newUser);
+
+        userInfoRepository.save(userInfo);
+
+        newUser.setUserInfo(userInfo);
 
         userRepository.save(newUser);
 

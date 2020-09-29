@@ -3,8 +3,10 @@ package com.temp3.eportfolioapplication.controller;
 import com.temp3.eportfolioapplication.model.DatabaseFile;
 import com.temp3.eportfolioapplication.model.Project;
 import com.temp3.eportfolioapplication.model.User;
+import com.temp3.eportfolioapplication.model.UserInfo;
 import com.temp3.eportfolioapplication.repository.DatabaseFileRepository;
 import com.temp3.eportfolioapplication.repository.ProjectRepository;
+import com.temp3.eportfolioapplication.repository.UserInfoRepository;
 import com.temp3.eportfolioapplication.repository.UserRepository;
 import com.temp3.eportfolioapplication.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class UserProfileController {
 
     @Autowired
     ProjectRepository projectRepository;
+
+    @Autowired
+    UserInfoRepository userInfoRepository;
 
     @Autowired
     ImageService imageService;
@@ -108,6 +113,8 @@ public class UserProfileController {
             }
         }
 
+        UserInfo userInfo = userInfoRepository.findByUser(currUser);
+
         model.addAttribute("imageIDs", imageList);
 
         model.addAttribute("audioIDs", audioList);
@@ -120,6 +127,14 @@ public class UserProfileController {
 
         model.addAttribute("displayIDs", displayList);
 
+        model.addAttribute("userInfo", userInfo);
+
+        boolean havePic = false;
+
+        if(userInfo != null && userInfo.getPicture() != null){
+            havePic = true;
+        }
+
         boolean showEdit = false;
 
         if(principal != null){
@@ -129,6 +144,8 @@ public class UserProfileController {
         }
 
         model.addAttribute("showEdit", showEdit);
+
+        model.addAttribute("havePic", havePic);
 
         return "profile";
     }

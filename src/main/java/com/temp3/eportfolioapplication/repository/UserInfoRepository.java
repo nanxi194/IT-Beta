@@ -1,13 +1,14 @@
 package com.temp3.eportfolioapplication.repository;
 
 import com.temp3.eportfolioapplication.model.User;
+import com.temp3.eportfolioapplication.model.UserInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
 
-    User findByUsername(String username);
+    UserInfo findById(long id);
 
-    User findById(long id);
+    UserInfo findByUser(User user);
 }
