@@ -2,63 +2,104 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project edit</title>
+    <link th:href="@{/css/infoEdit.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<h1 th:text="${prevInfo.lastName}">EDIT YOUR FILE</h1>
+
 <form th:action="@{/profile/{username}/edit(username=${#authentication.name})}" th:object="${userInfo}"method="POST" enctype="multipart/form-data">
 
 
+    <nav class="navbar sticky-top navbar-expand-lg" style="background-color: #2474a6">
 
-    <div>
+        <a class="navbar-brand text-white" th:href="@{/hello}">
+            <i class="fas fa-less-than" style="padding: 5px; color:white"></i>
+        </a>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+
+                <a th:href="@{/settings}">
+                    <i class="fas fa-cog" style="padding: 5px; color:white"></i>
+                </a>
+
+                <a th:href="@{/home}">
+                    <i class="fas fa-home" style="padding: 5px; color:white"></i>
+                </a>
+
+
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Log out"/>
+                </form>
+
+            </div>
+        </div>
+
+    </nav>
+    <div class = "userPic">
+        <img th:if="${havePic}" th:src="@{/user/{username}/picture(username=${#authentication.name})}">
+        <img th:if="!${havePic}" th:src="@{/images/account-img.png}">
+    </div>
+    <div class = "upload">
         <input type="file" name="picture"/>
     </div>
+    <div class = "title">
+        <div class = "firstname">
+            <label for="firstName">First Name:
+                <input class = "infos" name="infos" type="text" id="firstname"  th:value="${prevInfo?.firstName}" required/>
+            </label>
+        </div>
 
-    <div>
-        <label for="firstName">First Name
-            <input name="infos" type="text" id="firstname"  th:value="${prevInfo?.firstName}" required/>
-        </label>
+        <div class = "lastname">
+            <label for="lastname">Last Name:
+                <input class = "infos" name="infos" type="text" th:value="${prevInfo?.lastName}"   id="lastname" required/>
+            </label>
+        </div>
+
+        <div class = "contactInfo">
+            <label for="contactInfo">Contact Info:
+                <textarea class = "infos" name="infos" type="text" th:text="${prevInfo?.contactInfo}" id="contactInfo" required></textarea>
+            </label>
+        </div>
+
+        <div class = "location">
+            <label for="location">Location:
+                <textarea class = "infos" name="infos" type="text" th:text="${prevInfo?.location}" id="location" required></textarea>
+            </label>
+        </div>
+
+        <div class = "education">
+            <label for="education">Education:
+                <textarea class = "infos" name="infos" type="text" th:text="${prevInfo?.education}" id="education" required></textarea>
+            </label>
+        </div>
+
+        <div class ="workExp">
+            <label for="workExp">Work Experience:
+                <textarea class = "infos" name="infos" type="text" th:text="${prevInfo?.workExp}" id="workExp" required></textarea>
+            </label>
+        </div>
+
+        <div class = "summary">
+            <label for="summary">Profile Summary:
+                <textarea class = "infos" name="infos" type="text" th:text="${prevInfo?.summary}" id="summary" required></textarea>
+            </label>
+        </div>
     </div>
 
-    <div>
-        <label for="lastname">Last Name
-            <input name="infos" th:value="${prevInfo?.lastName}" type="text"  id="lastname" required/>
-        </label>
+    <div class = "change">
+        <input type="submit" value="change">
     </div>
-
-    <div>
-        <label for="contactInfo">Contact Info
-            <textarea name="infos" type="text" th:text="${prevInfo?.contactInfo}" id="contactInfo" required></textarea>
-        </label>
-    </div>
-
-    <div>
-        <label for="location">Location
-            <textarea name="infos" type="text" th:text="${prevInfo?.location}" id="location" required></textarea>
-        </label>
-    </div>
-
-    <div>
-        <label for="education">Education
-            <textarea name="infos" type="text" th:text="${prevInfo?.education}" id="education" required></textarea>
-        </label>
-    </div>
-
-    <div>
-        <label for="workExp">Work Experience
-            <textarea name="infos" type="text" th:text="${prevInfo?.workExp}" id="workExp" required></textarea>
-        </label>
-    </div>
-
-    <div>
-        <label for="summary">Profile Summary
-            <textarea name="infos" type="text" th:text="${prevInfo?.summary}" id="summary" required></textarea>
-        </label>
-    </div>
-
-
-    <input type="submit" value="change">
-
 </form>
 
 

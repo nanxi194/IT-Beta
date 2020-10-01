@@ -186,29 +186,27 @@
                     <a th:if="${showEdit}" th:href="@{/profile/{username}/edit(username=${#authentication.name})}" style="margin-left: 1000px;">
                         <button class="uploadButton"><i class="fas fa-plus"></i> Edit your information</button>
                     </a>
-
-                    <img th:if="${havePic}" th:src="@{/user/{username}/picture(username=${#authentication.name})}">
-                    <img th:if="!${havePic}" th:src="@{/images/account-img.png}">
-
-                    <h1>First Name</h1>
-                    <h2 th:text="${userInfo?.firstName}"></h2>
-                    <h1>Last Name</h1>
-                    <h2 th:text="${userInfo?.lastName}"></h2>
-                    <h1>Contact Info</h1>
-                    <h2 th:text="${userInfo?.contactInfo}"></h2>
-                    <h1>Location</h1>
-                    <h2 th:text="${userInfo?.location}"></h2>
-                    <h1>Education</h1>
-                    <h2 th:text="${userInfo?.education}"></h2>
-                    <h1>Work Experience</h1>
-                    <h2 th:text="${userInfo?.workExp}"></h2>
-                    <h1>Summary</h1>
-                    <h2 th:text="${userInfo?.summary}"></h2>
+                    <div class = "userPic">
+                        <img th:if="${havePic}" th:src="@{/user/{username}/picture(username=${#authentication.name})}">
+                        <img th:if="!${havePic}" th:src="@{/images/account-img.png}">
+                    </div>
+                    <div class="title">
+                        <h class = "firstName">First Name</h>
+                        <h th:text="${userInfo?.firstName}"></h>
+                        <h class = "lasttName">Last Name</h>
+                        <h th:text="${userInfo?.lastName}"></h>
+                        <h class = "contactInfo">Contact Info</h>
+                        <h th:text="${userInfo?.contactInfo}"></h>
+                        <h class = "location"> Location</h>
+                        <h th:text="${userInfo?.location}"></h>
+                        <h clas = "education">Education</h>
+                        <h th:text="${userInfo?.education}"></h>
+                        <h class = "workExp">Work Experience</h>
+                        <h th:text="${userInfo?.workExp}"></h>
+                        <h class = "summary">Summary</h>
+                        <h th:text="${userInfo?.summary}"></h>
                 </div>
-
-
             </div>
-
             </div>
         </div>
 
