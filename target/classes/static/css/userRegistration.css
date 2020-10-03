@@ -59,7 +59,8 @@ body {
 .container input[type='submit']:hover {
     cursor: pointer;
     width: 400px;
-    background-color: #121212;
+    background-color: #2474A6;
+    border: transparent;
     color: #FFFFFF;
 }
 
@@ -68,6 +69,7 @@ body {
     transition-duration: 0.4s;
     font-size: 16px;
     letter-spacing: 2px;
+    border: transparent;
     color: #FFFFFF;
-    background-color: #121212;
+    background-color: #2474A6;
 }
