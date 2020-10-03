@@ -1,5 +1,5 @@
 * {
-    box-sizing: border-box;
+   box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
 
@@ -51,7 +51,7 @@ h2 {
 }
 
 .row {
-    margin: 100px;
+    margin: 20px;
     position: center;
 }
 
@@ -142,7 +142,7 @@ input[type="submit"] {
 /* main header */
 .head{
     color:black;
-    margin-bottom: 200px;
+    margin-bottom: 80px;
 }
 
 
