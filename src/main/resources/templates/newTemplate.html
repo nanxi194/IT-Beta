@@ -66,12 +66,11 @@
         </div>
 
         <h1>PORTFOLIO</h1>
-
+        <a th:if="${showEdit}" th:href="@{/upload}">
+            <button class="uploadButton"><i class="fas fa-plus"></i> Upload a new document</button>
+        </a>
         <div class="row">
             <div class="column projects">
-                <a th:if="${showEdit}" th:href="@{/upload}" style="margin-left: 1000px;">
-                    <button class="uploadButton"><i class="fas fa-plus"></i> Upload a new document</button>
-                </a>
                 <div class="container">
                     <div th:each="index: ${#numbers.sequence(0, projectIDs.size()-1, 3)}">
                         <div class="row row-cols-3">
@@ -119,9 +118,6 @@
             </div>
 
             <div class="column images">
-                <a th:if="${showEdit}" th:href="@{/upload}" style="margin-left: 1000px;">
-                    <button class="uploadButton"><i class="fas fa-plus"></i> Upload a new document</button>
-                </a>
                 <div class="container">
                     <div th:each="index: ${#numbers.sequence(0, imageIDs.size()-1, 3)}">
                         <div class="row">
@@ -155,9 +151,6 @@
 
 
             <div class="column audio">
-                <a th:if="${showEdit}" th:href="@{/upload}" style="margin-left: 1000px;">
-                    <button class="uploadButton"><i class="fas fa-plus"></i> Upload a new document</button>
-                </a>
                 <div class="container">
                     <div th:each="index: ${#numbers.sequence(0, audioIDs.size()-1, 3)}">
                         <div class="row row-cols-3">
@@ -176,9 +169,6 @@
             </div>
 
             <div class="column video">
-                <a th:if="${showEdit}" th:href="@{/upload}" style="margin-left: 1000px;">
-                    <button class="uploadButton"><i class="fas fa-plus"></i> Upload a new document</button>
-                </a>
                 <div class="container">
                     <div th:each="index: ${#numbers.sequence(0, videoIDs.size()-1, 3)}">
                         <div class="row row-cols-3">
@@ -203,18 +193,12 @@
             </div>
 
             <div class="column documents">
-                <a th:if="${showEdit}" th:href="@{/upload}" style="margin-left: 1000px;">
-                    <button class="uploadButton"><i class="fas fa-plus"></i> Upload a new document</button>
-                </a>
                 <p th:each="doc : ${docs}">
                     <embed th:src="@{/document/{username}/{id}(username=${#authentication.name}, id=${doc.key})}" width="600" height="500" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
                 </p>
             </div>
 
             <div class="column about_me">
-                <a th:if="${showEdit}" th:href="@{/profile/{username}/edit(username=${#authentication.name})}" style="margin-left: 1000px;">
-                    <button class="uploadButton"><i class="fas fa-plus"></i> Edit your information</button>
-                </a>
 
                 <img th:if="${havePic}" th:src="@{/user/{username}/picture(username=${#authentication.name})}">
                 <img th:if="!${havePic}" th:src="@{/images/account-img.png}">
@@ -239,80 +223,80 @@
         </div>
     </div>
 
-</div>
-</div>
+            </div>
+        </div>
 
 
 
 
-<script>
-    filterSelection("all")
-    function filterSelection(c) {
-        let x, i;
-        x = document.getElementsByClassName("column");
-        if (c == "all") c = "projects";
-        for (i = 0; i < x.length; i++) {
-            RemoveClass(x[i], "show");
-            if (x[i].className.indexOf(c) > -1) AddClass(x[i], "show");
-        }
-    }
-
-    function AddClass(element, name) {
-        let i, arr1, arr2;
-        arr1 = element.className.split(" ");
-        arr2 = name.split(" ");
-        for (i = 0; i < arr2.length; i++) {
-            if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
-        }
-    }
-
-    function RemoveClass(element, name) {
-        let i, arr1, arr2;
-        arr1 = element.className.split(" ");
-        arr2 = name.split(" ");
-        for (i = 0; i < arr2.length; i++) {
-            while (arr1.indexOf(arr2[i]) > -1) {
-                arr1.splice(arr1.indexOf(arr2[i]), 1);
+    <script>
+        filterSelection("all")
+        function filterSelection(c) {
+            let x, i;
+            x = document.getElementsByClassName("column");
+            if (c == "all") c = "projects";
+            for (i = 0; i < x.length; i++) {
+                RemoveClass(x[i], "show");
+                if (x[i].className.indexOf(c) > -1) AddClass(x[i], "show");
             }
         }
-        element.className = arr1.join(" ");
-    }
 
-    let btnContainer = document.getElementById("myBtnContainer");
-    let btns = btnContainer.getElementsByClassName("btn");
-    for (let i = 0; i < btns.length; i++) {
-        btns[i].addEventListener("click", function(){
-            let current = document.getElementsByClassName("active");
-            current[0].className = current[0].className.replace(" active", "");
-            this.className += " active";
+        function AddClass(element, name) {
+            let i, arr1, arr2;
+            arr1 = element.className.split(" ");
+            arr2 = name.split(" ");
+            for (i = 0; i < arr2.length; i++) {
+                if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+            }
+        }
+
+        function RemoveClass(element, name) {
+            let i, arr1, arr2;
+            arr1 = element.className.split(" ");
+            arr2 = name.split(" ");
+            for (i = 0; i < arr2.length; i++) {
+                while (arr1.indexOf(arr2[i]) > -1) {
+                    arr1.splice(arr1.indexOf(arr2[i]), 1);
+                }
+            }
+            element.className = arr1.join(" ");
+        }
+
+        let btnContainer = document.getElementById("myBtnContainer");
+        let btns = btnContainer.getElementsByClassName("btn");
+        for (let i = 0; i < btns.length; i++) {
+            btns[i].addEventListener("click", function(){
+                let current = document.getElementsByClassName("active");
+                current[0].className = current[0].className.replace(" active", "");
+                this.className += " active";
+            });
+        }
+
+        function openModal() {
+            document.getElementById("myModal").style.display = "block";
+        }
+
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[slideIndex-1].style.display = "block";
+        }
+
+        $(document).mouseup(function(e) {
+            if ($(e.target).parents('.modal-content').length == 0 && !$(e.target).is('.modal-content')) {
+                $('.modal').css('display', 'none');
+            }
         });
-    }
 
-    function openModal() {
-        document.getElementById("myModal").style.display = "block";
-    }
-
-    let slideIndex = 1;
-    showSlides(slideIndex);
-
-    function showSlides(n) {
-        let i;
-        let slides = document.getElementsByClassName("mySlides");
-        if (n > slides.length) {slideIndex = 1}
-        if (n < 1) {slideIndex = slides.length}
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-        slides[slideIndex-1].style.display = "block";
-    }
-
-    $(document).mouseup(function(e) {
-        if ($(e.target).parents('.modal-content').length == 0 && !$(e.target).is('.modal-content')) {
-            $('.modal').css('display', 'none');
-        }
-    });
-
-</script>
+    </script>
 
 
 
