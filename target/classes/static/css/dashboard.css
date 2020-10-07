@@ -7,7 +7,7 @@ html { height: 100% }
 
 body {
     margin: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: Arial;
     min-height: 100%;
 }
 
@@ -112,89 +112,21 @@ input[type="submit"] {
 
 .choose {
     text-align:center;
-    margin-top:120px;
+    margin-top:50px;
     margin-bottom: 200px;
 }
 
 .choose .row .textbox{
     margin:30px;
 }
-
-
-
-
-
-/* ----------------------------------------------- */
-/* FOOTER */
-/* ----------------------------------------------- */
-
-footer {
-    background-color: #FCF4F4;
-    padding: 50px;
-    font-size: 80%;
-    color:black;
-}
-
-.footer-nav {
-    list-style: none;
-    float: left;
-}
-
-.social-links {
-    list-style: none;
-    float: right;
-}
-
-.footer-nav li,
-.social-links li {
-    display: inline-block;
-    margin-right: 20px;
-}
-
-.footer-nav li:last-child,
-.social-links li:last-child {
-    margin-right: 0;
-}
-
-.footer-nav li a:link,
-.footer-nav li a:visited,
-.social-links li a:link,
-.social-links li a:visited {
-    text-decoration: none;
-    border: 0;
-    color: #888;
-    -webkit-transition: color 0.2s;
-    transition: color 0.2s;
-}
-
-.footer-nav li a:hover,
-.footer-nav li a:active {
-    color: #ddd;
-}
-
-.social-links li a:link,
-.social-links li a:visited {
-    font-size: 160%;
-}
-
-.social-links li a:hover,
-.social-links li a:active{
-    color: #ddd;
-}
-
-
-footer p {
-    color: #888;
+h1 {
+    margin: 50px;
+    font-size: 40px;
     text-align: center;
-    margin-top: 20px;
+    color: black;
 }
 
-
-
-
-
-
-
-
-
+h2 {
+    margin-top: 30px;
+}
 

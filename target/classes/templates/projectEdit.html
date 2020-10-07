@@ -2,69 +2,303 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Project edit</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link th:href="@{/css/projectEdit.css}" rel="stylesheet" type="text/css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>project edit</title>
 </head>
 <body>
+
+<nav class="navbar sticky-top navbar-expand-lg" style="background-color: #2474a6">
+
+    <a class="navbar-brand text-white" th:href="@{/projects/{username}/{id}(id = ${projectID}, username=${#authentication.name})}">
+        <i class="fas fa-less-than" style="padding: 5px; color:white"></i>
+    </a>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+
+            <a th:href="@{/settings}">
+                <i class="fas fa-cog" style="padding: 5px; color:white"></i>
+            </a>
+
+            <a th:href="@{/home}">
+                <i class="fas fa-home" style="padding: 5px; color:white"></i>
+            </a>
+
+
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="Log out"/>
+            </form>
+
+        </div>
+    </div>
+
+</nav>
+
 <h1 th:inline="text">EDIT YOUR FILE</h1>
-<form th:action="@{/profile/{username}/edit" method="POST" enctype="utf8">
+<div class="main">
+<form th:action="@{${#httpServletRequest.requestURI}}" method="POST" enctype="multipart/form-data">
 
-    <div>
-        <label for="firstName">
-            <input th:field="*{firstName}" placeholder="First Name" id="firstname" name="firstname" required/>
-            <p th:each="error: ${#fields.errors('firstName')}"
-               th:text="${error}">Validation error</p>
-        </label>
-    </div>
 
-    <div>
-        <label for="lastname">
-            <input th:field="*{lastName}" type="text" placeholder="Last Name" id="lastname" name="lastname" required/>
-            <p th:each="error : ${#fields.errors('lastName')}"
-               th:text="${error}">Validation error</p>
-        </label>
-    </div>
 
-    <div>
-        <label for="username">
-            <input th:field="*{username}" type="text" placeholder="UserName" id="username" name="username" required/>
-            <p th:each="error : ${#fields.errors('username')}"
-               th:text="${error}">Validation error</p>
-        </label>
-
-    </div>
-
-    <div>
-        <label for="email">
-            <input type="email" th:field="*{email}"  placeholder="Email" id="email" name="email" required/>
-            <p th:each="error : ${#fields.errors('email')}"
-               th:text="${error}">Validation error</p>
-        </label>
+    <div class="row1">
+        <div class="column1">
+            <div class="upload-btn-wrapper1">
+                <button class="btn">Upload Your Document</button>
+                <input type="file" name="display" onchange="loadFile(event)"/>
+            </div>
+            <img id="output" width="100%" />
+        </div>
+        <div class="column2 form-group">
+            <input type="text" class="form-control" th:value="${projectName}" name="projectname">
+        </div>
     </div>
 
 
-    <div>
-        <label for="password">
-            <input th:field="*{password}" type="password" placeholder="Password" id="password" name="password" required/>
-            <p th:each="error : ${#fields.errors('password')}"
-               th:text="${error}">Validation error</p>
-        </label>
+    <div th:if="${fileIDs.size()} != 0" th:each="index: ${#numbers.sequence(0, fileIDs.size()-1)}">
+
+        <div class="upload-btn-wrapper">
+            <button class="btn">Upload Your Document</button>
+            <input th:id="${index}" type="file" name="files" onclick="getPID(this);" onchange="readURL2(this)"/>
+        </div>
+        <div class="row1">
+        <div class="column1" th:id="'c-' + ${index}">
+            <div th:if="${typeList.get(index) == 'image'}" >
+                <img width="100%" th:id="'im-' +  ${index}"  th:src="@{/image/{username}/{id}(username=${#authentication.name}, id=${fileIDs.get(index)})}">
+            </div>
+            <div th:if="${typeList.get(index) == 'audio'}" class="column">
+                <audio th:id="'im-' +  ${index}" controls th:src="@{/audio/{username}/{id}(username=${#authentication.name}, id=${fileIDs.get(index)})}"></audio>
+            </div>
+            <div th:if="${typeList.get(index) == 'video'}">
+                <video width="320" height="240" controls>
+                    <source width="100%" th:id="'im-' +  ${index}" controls th:src="@{/video/{username}/{id}(username=${#authentication.name}, id=${fileIDs.get(index)})}">
+                </video>
+            </div>
+            <div th:if="${typeList.get(index) == 'doc'}" >
+                <embed width="100%" th:id="'im-' +  ${index}" th:src="@{/document/{username}/{id}(username=${#authentication.name}, id=${fileIDs.get(index)})}" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
+            </div>
+        </div>
+
+        <div class="column2 form-group">
+            <textarea   class="form-control" rows="8" name="descriptions" type="text" th:text="${descriptions.get(index)}" ></textarea>
+        </div>
+
+        <button type="submit" class="upload1" name="delete" th:value="${fileIDs.get(index)}">Remove <i class="fas fa-times"></i></button>
+
+
+    </div>
     </div>
 
-    <div>
-        <label for="confirm">
-            <input th:field="*{matchingPassword}" type="confirm" placeholder="confirm" id="confirm" name="confirm" required/>
-        </label>
+
+
+
+    <div id="box">
+
     </div>
 
+    <input type="button" value="Add File" onclick="addFile();addRemove();" />
 
-    <input type="submit" value="SIGN UP">
+    <input id="submitButton" value="Submit" type="submit"/>
 
-    <p class="change_link" style="text-align: center">
-        <span class="text">Already have an account?</span>
-        <a th:href="login" class="blue">LOG IN</a>
-    </p>
+
+
 </form>
+</div>
 
 
 </body>
+
+<script type="text/javascript" th:inline="javascript">
+
+
+    $('#submitButton').click(function() {
+        location.reload();
+        $('body').append('<div id="loading"><img id="loading-image" src="https://media.giphy.com/media/54Y3bemAMQTpWzozrX/giphy.gif" alt="Loading..." /><br>submitted successfully</br></div>');
+        $(window).on('load', function(){
+            setTimeout(removeLoader, 2000);
+        });
+        function removeLoader(){
+            $( "#loading" ).fadeOut(500, function() {
+                $( "#loading" ).remove();
+            });
+        }
+    });
+
+
+
+    function addElement(parentId, elementTag, elementId, html) {
+        let p = document.getElementById(parentId);
+        let newElement = document.createElement(elementTag);
+        newElement.setAttribute('id', elementId);
+        newElement.innerHTML = html;
+        p.appendChild(newElement);
+    }
+
+
+
+    let imageId = 0;
+    let fileId = 0;
+    function addFile() {
+        fileId++;
+        let html = '<div class="row1">';
+        html += '<span><button class="upload1">Remove <i class="fas fa-times"></i></button></span>';
+        html +=  '<div class="column1" id="i-'+imageId+'">';
+        html +=  '<div id="button-'+imageId+'" onclick="getParentID(this);addRemove();" class="upload-btn-wrapper">';
+        html +=  ' <button class="btn">Upload Your Document</button>';
+        html +=  '<input type="file" name="newFiles" onchange="readURL(this)"/>';
+        html +=  '</div>';
+        html +=  '</div>';
+        html +=  '<div class="column2 form-group">';
+        html +=  ' <textarea class="form-control" rows="8" placeholder="Add Your text." name="newDescription"></textarea>';
+        html +=  '</div>';
+        html +=  '</div>';
+        addElement('box', 'p', 'file-' + fileId, html);
+        imageId++;
+    }
+
+
+
+
+    var remove = function(){
+        this.parentNode.remove();
+    };
+
+    function addRemove() {
+        var div = document.getElementById("box");
+        var spans = div.getElementsByTagName("span");
+
+        for (i = 0; i < spans.length; i++) {
+            spans[i].addEventListener('click', remove, false);
+        }
+    }
+
+    var imageID;
+    var buttons;
+    function getParentID(input){
+        imageID = '#' + $(input).parent().attr('id');
+        buttons = '#' + input.id;
+    }
+
+
+    function readURL(input){
+        if (input.files && input.files[0]) {
+            $.each(input.files, function() {
+                var reader = new FileReader();
+
+                if (input.files[0].type.match('image.*')){
+                    reader.onload = function (e) {
+                        $(imageID).append('<img src="' + e.target.result + '" width="100%" />');
+                        $(buttons).hide();
+                    }
+                }
+
+
+                if (input.files[0].type.match('video.*')) {
+                    reader.onload = function (e) {
+                        $(imageID).append('<video src="' + e.target.result + '" width="100%" controls/>');
+                        $(buttons).hide();
+                    }
+                }
+
+
+                if (input.files[0].type.match('audio.*')) {
+                    reader.onload = function (e) {
+                        $(imageID).append('<audio src="' + e.target.result + '" width="100%" controls/>');
+                        $(buttons).hide();
+                    }
+                }
+
+
+                if (input.files[0].type.match('.pdf')) {
+                    reader.onload = function (e) {
+                        $(imageID).append('<embed  src="' + e.target.result + '" width="100%" />');
+                        $(buttons).hide();
+                    }
+                }
+
+
+
+                reader.readAsDataURL(this);
+            });
+        }
+    }
+
+    var loadFile = function(event) {
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function() {
+            URL.revokeObjectURL(output.src)
+            $('.upload-btn-wrapper1').hide();
+
+        }
+    };
+
+
+
+    function readURL2(input){
+        if (input.files && input.files[0]) {
+            $.each(input.files, function() {
+                var reader = new FileReader();
+
+                if (input.files[0].type.match('image.*')){
+                    reader.onload = function (e) {
+                        $(position).append('<img id="'+elementId+'" src="' + e.target.result + '" width="100%" />');
+                        $(image).remove();
+                    }
+                }
+
+
+                if (input.files[0].type.match('video.*')) {
+                    reader.onload = function (e) {
+                        $(position).append('<video id="'+elementId+'" src="' + e.target.result + '" width="100%" controls/>');
+                        $(image).remove();
+                    }
+                }
+
+
+                if (input.files[0].type.match('audio.*')) {
+                    reader.onload = function (e) {
+                        $(position).append('<audio id="'+elementId+'" src="' + e.target.result + '" width="100%" controls/>');
+                        $(image).remove();
+
+                    }
+                }
+
+
+                if (input.files[0].type.match('.pdf')) {
+                    reader.onload = function (e) {
+                        $(position).append('<embed  id="'+elementId+'" src="' + e.target.result + '" width="100%" />');
+                        $(image).remove();
+                    }
+                }
+
+                reader.readAsDataURL(this);
+            });
+        }
+    }
+
+    let elementId;
+    let image;
+    let position;
+    function getPID(input){
+                position = '#c-' +input.id;
+                image = '#im-' + input.id;
+        elementId = 'im-' + input.id;
+
+
+    }
+
+
+
+
+
+
+</script>
 </html>

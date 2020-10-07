@@ -1,5 +1,5 @@
 * {
-   box-sizing: border-box;
+
     font-family: Cormorant Infant;
 }
 
@@ -31,7 +31,7 @@ h2 {
 }
 
 .uploadButton {
-    background-color: #4E5D6B;
+    background-color: #2474a6;
     border: none;
     color: white;
     padding: 10px 32px;
@@ -154,4 +154,77 @@ input[type="submit"] {
     font-size: 14px;
     text-align: center;
 
+}
+
+
+/* about me part */
+.edit{
+    position: relative;
+    top: 5vw;
+    left: 8vw;
+    color: white;
+    background-color: #2474a6;
+    border: none;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+
+.userPic{
+    position: relative;
+    top: 0vw;
+    left:25vw;
+}
+
+.title{
+    color: #2474A6;
+    font-size: 1vw;
+}
+
+.firstname{
+    position: relative;
+    top:0vw;
+    left: 40vw;
+}
+
+.lastname{
+    position: relative;
+    top: 0vw;
+    left: 40.1vw;
+}
+
+.contactInfo {
+    position: relative;
+    top: -2vw;
+    left: 40vw;
+}
+
+.location{
+    position: relative;
+    top: 0vw;
+    left: 40vw;
+}
+
+.education{
+    position: relative;
+    top: 2vw;
+    left: 40vw;
+}
+
+.workExp{
+    position: relative;
+    top: 4vw;
+    left: 40vw;
+}
+
+.summary{
+    position: relative;
+    top: 6vw;
+    left: 40vw;
 }

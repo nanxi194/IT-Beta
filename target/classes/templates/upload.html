@@ -18,7 +18,7 @@
 
 <body>
 
-<nav class="navbar sticky-top navbar-expand-lg" style="background-color: #4E5D6B">
+<nav class="navbar sticky-top navbar-expand-lg" style="background-color: #2474a6">
 
     <a class="navbar-brand text-white" th:href="@{/user/{username}(username=${#authentication.name})}">
         <i class="fas fa-less-than" style="padding: 5px; color:white"></i>
@@ -68,13 +68,16 @@
 
         <div id="box">
             <p>
+
+            <div id="0" onclick="getParentID(this);addRemove();" class="upload-btn-wrapper">
+                <button class="btn">Upload Your Document</button>
+                <input type="file" name="files" onchange="readURL(this)"/>
+            </div>
+
             <div class="row1">
                 <span><button class="upload1">Remove <i class="fas fa-times"></i></button></span>
-                <div class="column1" id="0">
-                    <div id="button-0" onclick="getParentID(this);addRemove();" class="upload-btn-wrapper">
-                        <button class="btn">Upload Your Document</button>
-                        <input type="file" name="files" onchange="readURL(this)"/>
-                    </div>
+                <div class="column1" id="c-0">
+                    <img id="im-0" width="100%" th:src="@{images/fileBackground.png}">
                 </div>
 
                 <div class="column2 form-group">
@@ -129,13 +132,14 @@
     function addFile() {
         imageId++;
         fileId++;
-        let html = '<div class="row1">';
-        html += '<span><button class="upload1">Remove <i class="fas fa-times"></i></button></span>';
-        html +=  '<div class="column1" id="'+imageId+'">';
-        html +=  '<div id="button-'+imageId+'" onclick="getParentID(this);addRemove();" class="upload-btn-wrapper">';
+        let html =  '<div id="'+imageId+'" onclick="getParentID(this);addRemove();" class="upload-btn-wrapper">';
         html +=  ' <button class="btn">Upload Your Document</button>';
         html +=  '<input type="file" name="files" onchange="readURL(this)"/>';
         html +=  '</div>';
+        html += '<div class="row1">';
+        html += '<span><button class="upload1">Remove <i class="fas fa-times"></i></button></span>';
+        html +=  '<div class="column1" id="c-'+imageId+'">';
+        html += '<img  id="im-'+imageId+'" width="100%" th:src="@{images/fileBackground.png}">';
         html +=  '</div>';
         html +=  '<div class="column2 form-group">';
         html +=  ' <textarea class="form-control" rows="8" placeholder="Add Your text." name="descriptions"></textarea>';
@@ -161,10 +165,12 @@
     }
 
     var imageID;
-    var buttons;
+    var imageID2;
+    var imageID3;
     function getParentID(input){
-        imageID = '#' + $(input).parent().attr('id');
-        buttons = '#' + input.id;
+        imageID = '#c-' +  input.id;
+        imageID2 = 'im-' +  input.id;
+        imageID3 = '#im-' +  input.id;
     }
 
 
@@ -175,32 +181,32 @@
 
                 if (input.files[0].type.match('image.*')){
                     reader.onload = function (e) {
-                            $(imageID).append('<img src="' + e.target.result + '" width="100%" />');
-                            $(buttons).hide();
+                        $(imageID).append('<img id="'+imageID2+'" src="' + e.target.result + '" width="100%" />');
+                        $(imageID3).remove();
                         }
                 }
 
 
                 if (input.files[0].type.match('video.*')) {
                         reader.onload = function (e) {
-                            $(imageID).append('<video src="' + e.target.result + '" width="100%" controls/>');
-                            $(buttons).hide();
+                            $(imageID).append('<video id="'+imageID2+'" src="' + e.target.result + '" width="100%" controls/>');
+                            $(imageID3).remove();
                         }
                 }
 
 
                 if (input.files[0].type.match('audio.*')) {
                         reader.onload = function (e) {
-                            $(imageID).append('<audio src="' + e.target.result + '" width="100%" controls/>');
-                            $(buttons).hide();
+                            $(imageID).append('<audio id="'+imageID2+'" src="' + e.target.result + '" width="100%" controls/>');
+                            $(imageID3).remove();
                         }
                 }
 
 
-                if (input.files[0].type.match('doc.*')) {
+                if (input.files[0].type.match('.pdf')) {
                             reader.onload = function (e) {
-                                $(imageID).append('<embed  src="' + e.target.result + '" width="100%" />');
-                                $(buttons).hide();
+                                $(imageID).append('<embed  id="'+imageID2+'" src="' + e.target.result + '" width="100%" />');
+                                $(imageID3).remove();
                             }
                 }
 

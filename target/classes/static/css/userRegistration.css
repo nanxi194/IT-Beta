@@ -6,7 +6,7 @@ body {
     margin: 0;
     padding: 0;
     font: 16px/20px Arial;
-    font-family: Roboto;
+    font-family: Arial;
 }
 
 .wrap {
@@ -50,7 +50,7 @@ body {
 }
 
 .blue{
-    color: #121212;
+    color: #2474a6;
 }
 .text{
     color: #121212;
@@ -59,7 +59,7 @@ body {
 .container input[type='submit']:hover {
     cursor: pointer;
     width: 400px;
-    background-color: #121212;
+    background-color: #2474a6;
     color: #FFFFFF;
 }
 
@@ -69,5 +69,6 @@ body {
     font-size: 16px;
     letter-spacing: 2px;
     color: #FFFFFF;
-    background-color: #121212;
+    background-color: #2474a6;
+    border: transparent;
 }

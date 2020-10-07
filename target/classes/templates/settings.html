@@ -17,9 +17,9 @@
 
 
 
-
+<body>
 <div>
-    <nav id="changeColor" class="navbar sticky-top navbar-expand-lg" style="background-color: #4E5D6B">
+    <nav id="changeColor" class="navbar sticky-top navbar-expand-lg" style="background-color: #2474a6">
 
             <a class="navbar-brand text-white" th:href="@{/hello}">
                 <i class="fas fa-less-than" style="padding: 5px; color:white"></i>
@@ -47,12 +47,23 @@
 
 
     <div class="main">
-        <h1>SETTINGS</h1>
+        <h1>Settings</h1>
 
         <div th:if="${message}">
             <div class="container">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <p th:text="${message}"/>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div th:if="${error}">
+            <div class="container">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <p th:text="${error}"/>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -81,36 +92,30 @@
             <input type="submit" value="Change">
             </div>
         </form>
+        <br>
+        <form th:action="@{/changePassword}" method="post" enctype="utf8">
+            <div>
+                <label>Current
+                    <input type="password" name="current">
+                </label>
+            </div>
+            <div>
+                <label>New
+                    <input type="password" name="new">
+                </label>
+            </div>
+            <div>
+                <label>Retype New
+                    <input type="password" name="retype">
+                </label>
+            </div>
+            <input type="submit" value="Change">
+        </form>
 
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
-
+</body>
 
 
 

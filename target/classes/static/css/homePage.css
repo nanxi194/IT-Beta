@@ -11,7 +11,7 @@
 
 body {
     margin: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: Arial;
 }
 
 .button{
@@ -87,7 +87,8 @@ p{
 .topnav {
     overflow: hidden;
     background-color: white;
-    margin-bottom: 100px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .topnav a {
