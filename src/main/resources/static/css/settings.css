@@ -23,19 +23,18 @@ body {
 
 
 h1 {
-    font-size: 19px;
+    font-size: 40px;
     word-break: break-all;
     text-align: center;
-    font-family: Cormorant Infant;
+    font-family: Arial;
     font-style: normal;
     font-weight: normal;
-    font-size: 19px;
     line-height: 44px;
 }
 
 
 h2 , h3{
-    font-family: Cormorant Infant;
+    font-family: Airal;
     font-style: normal;
     font-weight: normal;
     font-size: 30px;
@@ -54,7 +53,7 @@ alterPosition{
 
 
 lable{
-    font-family: Roboto;
+    font-family: Arial;
     font-style: normal;
     font-weight: normal;
     font-size: 20px;
@@ -111,7 +110,7 @@ input[type="color"] {
     background-color: white;
     cursor: pointer;
     text-align: center;
-    font-family: Roboto;
+    font-family: Arial;
     font-style: normal;
     font-weight: normal;
 }
