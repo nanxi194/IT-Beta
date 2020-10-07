@@ -18,8 +18,8 @@ public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    public void storeProject(Set<DatabaseFile> files, String username) throws IOException {
-        Project project = new Project(files, username);
+    public void storeProject(Set<DatabaseFile> files, String username, String projectName) throws IOException {
+        Project project = new Project(files, username, projectName);
 
         for(DatabaseFile file:files){
             file.setProject(project);
@@ -28,12 +28,28 @@ public class ProjectService {
         projectRepository.save(project);
     }
 
-    public void storeProject(Set<DatabaseFile> files, String username, byte[] display) throws IOException {
-        Project project = new Project(files, username, display);
+    public void storeProject(Set<DatabaseFile> files, String username, byte[] display, String projectName) throws IOException {
+        Project project = new Project(files, username, display, projectName);
 
         for(DatabaseFile file:files){
             file.setProject(project);
         }
+
+        projectRepository.save(project);
+    }
+
+    public void addToProject(Set<DatabaseFile> files, String id){
+        Project project = projectRepository.findById(Long.parseLong(id));
+
+        Set<DatabaseFile> oldFiles = project.getFiles();
+
+        for(DatabaseFile file:files){
+            file.setProject(project);
+        }
+
+        oldFiles.addAll(files);
+
+        project.setFiles(oldFiles);
 
         projectRepository.save(project);
     }

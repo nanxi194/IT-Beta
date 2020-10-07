@@ -97,14 +97,19 @@ public class UserProfileController {
             }
         }
 
+
         Iterable<Project> projects = projectRepository.findAllByUsername(username);
 
         List<Long> projectList = new ArrayList<>();
+
+        List<String> projectNameList = new ArrayList<>();
 
         List<Long> displayList = new ArrayList<>();
 
         for(Project project: projects){
             projectList.add(project.getId());
+            projectNameList.add(project.getProjectName());
+
             if(project.getDisplay() != null){
                 displayList.add(project.getId());
             }
@@ -112,6 +117,7 @@ public class UserProfileController {
                 displayList.add((long) 0);
             }
         }
+
 
         UserInfo userInfo = userInfoRepository.findByUser(currUser);
 
@@ -124,6 +130,8 @@ public class UserProfileController {
         model.addAttribute("docs", docMap);
 
         model.addAttribute("projectIDs", projectList);
+
+        model.addAttribute("projectNames", projectNameList);
 
         model.addAttribute("displayIDs", displayList);
 
@@ -147,7 +155,7 @@ public class UserProfileController {
 
         model.addAttribute("havePic", havePic);
 
-        return "profile";
+        return "newTemplate";
     }
 
 }

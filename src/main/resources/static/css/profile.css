@@ -1,5 +1,6 @@
 * {
    box-sizing: border-box;
+    font-family: Cormorant Infant;
 }
 
 
@@ -15,7 +16,6 @@ h1 {
     font-size: 35px;
     word-break: break-all;
     text-align: center;
-    font-family: Cormorant Infant;
     font-style: normal;
     font-weight: 600;
     line-height: 58px;
@@ -25,15 +25,13 @@ h2 {
     font-size: 19px;
     word-break: break-all;
     text-align: center;
-    font-family: Cormorant Infant;
     font-style: normal;
     font-weight: normal;
-    font-size: 19px;
     line-height: 44px;
 }
 
 .uploadButton {
-    background-color: #2474A6;
+    background-color: #4E5D6B;
     border: none;
     color: white;
     padding: 10px 32px;
@@ -150,17 +148,10 @@ input[type="submit"] {
     cursor: pointer;
 }
 
-/* about me part */
 
-.userPic{
-    position: relative;
-    top: 0vw;
-    left:24vw;
+.text {
+    color: black;
+    font-size: 14px;
+    text-align: center;
+
 }
-
-.title{
-    color: #2474A6;
-    font-size: 1vw;
-}
-
-

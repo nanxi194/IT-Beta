@@ -27,6 +27,7 @@ public class DatabaseFile {
 
     private String description;
 
+
     @EqualsAndHashCode.Exclude
     @ManyToOne
     private Project project;
@@ -38,4 +39,5 @@ public class DatabaseFile {
         this.user = user;
         this.description = description;
     }
+
 }

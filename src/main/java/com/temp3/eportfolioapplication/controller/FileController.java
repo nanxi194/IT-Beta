@@ -65,6 +65,7 @@ public class FileController {
     public String uploadMultipleFile(@RequestParam("files") MultipartFile[] files,
                                      @RequestParam("display") MultipartFile display,
                                      @RequestParam("descriptions") String[] descriptions,
+                                     @RequestParam("projectName") String projectName,
                                      Principal principal, RedirectAttributes redirectAttributes) throws IOException, FileTooLargeException {
 
         Set<DatabaseFile> fileSet = new HashSet<>();
@@ -75,19 +76,21 @@ public class FileController {
             if(files[i].getSize() > 5242880){
                 throw new FileTooLargeException("");
             }
+            if(files[i].getSize() != 0){
+                currFile = fileService.storeFile(files[i], principal.getName(), descriptions[i]);
 
-            currFile = fileService.storeFile(files[i], principal.getName(), descriptions[i]);
+                fileSet.add(currFile);
 
-            fileSet.add(currFile);
+                fileList.add(files[i].getOriginalFilename());
+            }
 
-            fileList.add(files[i].getOriginalFilename());
         }
 
         if(display.getSize() == 0){
-            projectService.storeProject(fileSet, principal.getName());
+            projectService.storeProject(fileSet, principal.getName(), projectName);
         }
         else{
-            projectService.storeProject(fileSet, principal.getName(), display.getBytes());
+            projectService.storeProject(fileSet, principal.getName(), display.getBytes(), projectName);
         }
 
 

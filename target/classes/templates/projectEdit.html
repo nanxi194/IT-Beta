@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Project edit</title>
+</head>
+<body>
+<h1 th:inline="text">EDIT YOUR FILE</h1>
+<form th:action="@{/profile/{username}/edit" method="POST" enctype="utf8">
+
+    <div>
+        <label for="firstName">
+            <input th:field="*{firstName}" placeholder="First Name" id="firstname" name="firstname" required/>
+            <p th:each="error: ${#fields.errors('firstName')}"
+               th:text="${error}">Validation error</p>
+        </label>
+    </div>
+
+    <div>
+        <label for="lastname">
+            <input th:field="*{lastName}" type="text" placeholder="Last Name" id="lastname" name="lastname" required/>
+            <p th:each="error : ${#fields.errors('lastName')}"
+               th:text="${error}">Validation error</p>
+        </label>
+    </div>
+
+    <div>
+        <label for="username">
+            <input th:field="*{username}" type="text" placeholder="UserName" id="username" name="username" required/>
+            <p th:each="error : ${#fields.errors('username')}"
+               th:text="${error}">Validation error</p>
+        </label>
+
+    </div>
+
+    <div>
+        <label for="email">
+            <input type="email" th:field="*{email}"  placeholder="Email" id="email" name="email" required/>
+            <p th:each="error : ${#fields.errors('email')}"
+               th:text="${error}">Validation error</p>
+        </label>
+    </div>
+
+
+    <div>
+        <label for="password">
+            <input th:field="*{password}" type="password" placeholder="Password" id="password" name="password" required/>
+            <p th:each="error : ${#fields.errors('password')}"
+               th:text="${error}">Validation error</p>
+        </label>
+    </div>
+
+    <div>
+        <label for="confirm">
+            <input th:field="*{matchingPassword}" type="confirm" placeholder="confirm" id="confirm" name="confirm" required/>
+        </label>
+    </div>
+
+
+    <input type="submit" value="SIGN UP">
+
+    <p class="change_link" style="text-align: center">
+        <span class="text">Already have an account?</span>
+        <a th:href="login" class="blue">LOG IN</a>
+    </p>
+</form>
+
+
+</body>
+</html>

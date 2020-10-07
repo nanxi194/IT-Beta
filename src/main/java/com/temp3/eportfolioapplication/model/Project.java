@@ -4,6 +4,7 @@ package com.temp3.eportfolioapplication.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -20,22 +21,28 @@ public class Project {
 
     private String username;
 
+
     @Lob
     private byte[] display;
 
+    private String projectName;
+
+
     @EqualsAndHashCode.Exclude
-    @OneToMany
+    @OneToMany(mappedBy = "project")
     private Set<DatabaseFile> files;
 
 
-    public Project(Set<DatabaseFile> files, String username){
+    public Project(Set<DatabaseFile> files, String username, String projectName){
         this.files = files;
         this.username = username;
+        this.projectName = projectName;
     }
 
-    public Project(Set<DatabaseFile> files, String username, byte[] display){
+    public Project(Set<DatabaseFile> files, String username, byte[] display, String ProjectName){
         this.files = files;
         this.username = username;
         this.display = display;
+        this.projectName = ProjectName;
     }
 }

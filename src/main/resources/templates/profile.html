@@ -16,7 +16,7 @@
 </head>
 
 <div>
-    <nav class="navbar sticky-top navbar-expand-lg" style="background-color: #2474A6">
+    <nav class="navbar sticky-top navbar-expand-lg" style="background-color: #4E5D6B">
 
         <a class="navbar-brand text-white" th:href="@{/hello}">
             <i class="fas fa-less-than" style="padding: 5px; color:white"></i>
@@ -63,7 +63,6 @@
         </div>
 
             <div class="row">
-
                 <div class="column projects">
                     <a th:if="${showEdit}" th:href="@{/upload}" style="margin-left: 1000px;">
                         <button class="uploadButton"><i class="fas fa-plus"></i> Upload a new document</button>
@@ -73,21 +72,34 @@
                             <div class="row row-cols-3">
                                 <div class = "col">
                                     <a th:href="@{/projects/{username}/{id}(username=${#authentication.name}, id=${projectIDs.get(index)})}">
-                                        <img th:if="${displayIDs.get(index) == 0}" th:src="@{/images/defaultProject.jpg}" style="width:100%">
-                                        <img th:if="${displayIDs.get(index) != 0}"  th:src="@{/display/projects/{username}/{id}(username=${#authentication.name}, id=${displayIDs.get(index)})}" style="width:100%">
+                                        <img th:if="${displayIDs.get(index) == 0}" th:src="@{/images/defaultProject.jpg}" style="width:100%" alt="image">
+                                        <img th:if="${displayIDs.get(index) != 0}"  th:src="@{/display/projects/{username}/{id}(username=${#authentication.name}, id=${displayIDs.get(index)})}" style="width:100%" alt="image">
                                     </a>
+                                    <div>
+                                        <p th:text="${projectNames.get(index)}"></p>
+                                    </div>
+
                                 </div>
                                 <div class = "col">
                                     <a th:if="${(index + 1) < projectIDs.size()}" th:href="@{/projects/{username}/{id}(username=${#authentication.name}, id=${projectIDs.get(index + 1)})}">
                                         <img th:if="${displayIDs.get(index + 1) == 0}" th:src="@{/images/defaultProject.jpg}" style="width:100%">
                                         <img th:if="${displayIDs.get(index + 1) != 0}"  th:src="@{/display/projects/{username}/{id}(username=${#authentication.name}, id=${displayIDs.get(index + 1)})}" style="width:100%">
                                     </a>
+                                    <div th:if="${(index + 1) < projectIDs.size()}">
+                                        <p th:text="${projectNames.get(index + 1)}"></p>
+                                    </div>
+
+
                                 </div>
                                 <div class = "col">
                                     <a th:if="${(index + 2) < projectIDs.size()}" th:href="@{/projects/{username}/{id}(username=${#authentication.name}, id=${projectIDs.get(index + 2)})}" >
                                         <img th:if="${displayIDs.get(index + 2) == 0}" th:src="@{/images/defaultProject.jpg}" style="width:100%">
                                         <img th:if="${displayIDs.get(index + 2) != 0}"  th:src="@{/display/projects/{username}/{id}(username=${#authentication.name}, id=${displayIDs.get(index + 2)})}" style="width:100%">
                                     </a>
+                                    <div th:if="${(index + 2) < projectIDs.size()}">
+                                        <p th:text="${projectNames.get(index + 2)}"></p>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -182,31 +194,34 @@
                             <embed th:src="@{/document/{username}/{id}(username=${#authentication.name}, id=${doc.key})}" width="600" height="500" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
                         </p>
                 </div>
+
                 <div class="column about_me">
                     <a th:if="${showEdit}" th:href="@{/profile/{username}/edit(username=${#authentication.name})}" style="margin-left: 1000px;">
                         <button class="uploadButton"><i class="fas fa-plus"></i> Edit your information</button>
                     </a>
-                    <div class = "userPic">
-                        <img th:if="${havePic}" th:src="@{/user/{username}/picture(username=${#authentication.name})}">
-                        <img th:if="!${havePic}" th:src="@{/images/account-img.png}">
-                    </div>
-                    <div class="title">
-                        <h class = "firstName">First Name</h>
-                        <h th:text="${userInfo?.firstName}"></h>
-                        <h class = "lasttName">Last Name</h>
-                        <h th:text="${userInfo?.lastName}"></h>
-                        <h class = "contactInfo">Contact Info</h>
-                        <h th:text="${userInfo?.contactInfo}"></h>
-                        <h class = "location"> Location</h>
-                        <h th:text="${userInfo?.location}"></h>
-                        <h clas = "education">Education</h>
-                        <h th:text="${userInfo?.education}"></h>
-                        <h class = "workExp">Work Experience</h>
-                        <h th:text="${userInfo?.workExp}"></h>
-                        <h class = "summary">Summary</h>
-                        <h th:text="${userInfo?.summary}"></h>
+
+                    <img th:if="${havePic}" th:src="@{/user/{username}/picture(username=${#authentication.name})}">
+                    <img th:if="!${havePic}" th:src="@{/images/account-img.png}">
+
+                    <h1>First Name</h1>
+                    <h2 th:text="${userInfo?.firstName}"></h2>
+                    <h1>Last Name</h1>
+                    <h2 th:text="${userInfo?.lastName}"></h2>
+                    <h1>Contact Info</h1>
+                    <h2 th:text="${userInfo?.contactInfo}"></h2>
+                    <h1>Location</h1>
+                    <h2 th:text="${userInfo?.location}"></h2>
+                    <h1>Education</h1>
+                    <h2 th:text="${userInfo?.education}"></h2>
+                    <h1>Work Experience</h1>
+                    <h2 th:text="${userInfo?.workExp}"></h2>
+                    <h1>Summary</h1>
+                    <h2 th:text="${userInfo?.summary}"></h2>
                 </div>
+
+
             </div>
+
             </div>
         </div>
 

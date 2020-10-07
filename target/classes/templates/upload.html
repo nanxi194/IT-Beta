@@ -18,7 +18,7 @@
 
 <body>
 
-<nav class="navbar sticky-top navbar-expand-lg" style="background-color: #2474A6">
+<nav class="navbar sticky-top navbar-expand-lg" style="background-color: #4E5D6B">
 
     <a class="navbar-brand text-white" th:href="@{/user/{username}(username=${#authentication.name})}">
         <i class="fas fa-less-than" style="padding: 5px; color:white"></i>
@@ -68,11 +68,10 @@
 
         <div id="box">
             <p>
-
             <div class="row1">
                 <span><button class="upload1">Remove <i class="fas fa-times"></i></button></span>
-                <div class="column1">
-                    <div class="upload-btn-wrapper">
+                <div class="column1" id="0">
+                    <div id="button-0" onclick="getParentID(this);addRemove();" class="upload-btn-wrapper">
                         <button class="btn">Upload Your Document</button>
                         <input type="file" name="files" onchange="readURL(this)"/>
                     </div>
@@ -87,7 +86,7 @@
         </div>
 
         <input type="button" value="Add File" onclick="addFile();addRemove();" />
-        <input value="Submit" type="submit"/>
+        <input id="submitButton" value="Submit" type="submit"/>
 
     </form>
 
@@ -97,9 +96,23 @@
 
 
 
-
-
 <script type="text/javascript" th:inline="javascript">
+
+        $('#submitButton').click(function() {
+            location.reload();
+            $('body').append('<div id="loading"><img id="loading-image" src="https://media.giphy.com/media/54Y3bemAMQTpWzozrX/giphy.gif" alt="Loading..." /><br>submitted successfully</br></div>');
+            $(window).on('load', function(){
+                setTimeout(removeLoader, 2000);
+            });
+            function removeLoader(){
+                $( "#loading" ).fadeOut(500, function() {
+                    $( "#loading" ).remove();
+                });
+            }
+        });
+
+
+
 
     function addElement(parentId, elementTag, elementId, html) {
         let p = document.getElementById(parentId);
@@ -110,24 +123,27 @@
     }
 
 
+
+    let imageId = 0;
     let fileId = 0;
     function addFile() {
+        imageId++;
         fileId++;
-        let html =
-            '<div class="row1">'+
-            '<span><button class="upload1">Remove <i class="fas fa-times"></i></button></span>'+
-            '<div class="column1">'+
-            '<div class="upload-btn-wrapper">'+
-            ' <button class="btn">Upload Your Document</button>'+
-            '<input type="file" name="files" onchange="readURL(this)"/>'+
-            '</div>'+
-            '</div>'+
-            '<div class="column2 form-group">'+
-            ' <textarea class="form-control" rows="8" placeholder="Add Your text." name="descriptions"></textarea>'+
-            '</div>'+
-            '</div>';
+        let html = '<div class="row1">';
+        html += '<span><button class="upload1">Remove <i class="fas fa-times"></i></button></span>';
+        html +=  '<div class="column1" id="'+imageId+'">';
+        html +=  '<div id="button-'+imageId+'" onclick="getParentID(this);addRemove();" class="upload-btn-wrapper">';
+        html +=  ' <button class="btn">Upload Your Document</button>';
+        html +=  '<input type="file" name="files" onchange="readURL(this)"/>';
+        html +=  '</div>';
+        html +=  '</div>';
+        html +=  '<div class="column2 form-group">';
+        html +=  ' <textarea class="form-control" rows="8" placeholder="Add Your text." name="descriptions"></textarea>';
+        html +=  '</div>';
+        html +=  '</div>';
         addElement('box', 'p', 'file-' + fileId, html);
     }
+
 
 
 
@@ -144,35 +160,54 @@
         }
     }
 
+    var imageID;
+    var buttons;
+    function getParentID(input){
+        imageID = '#' + $(input).parent().attr('id');
+        buttons = '#' + input.id;
+    }
 
 
     function readURL(input){
-
         if (input.files && input.files[0]) {
             $.each(input.files, function() {
                 var reader = new FileReader();
 
-                if(true) {
+                if (input.files[0].type.match('image.*')){
                     reader.onload = function (e) {
-                        var b = document.getElementById("box");
-                        var imageOutput = b.getElementsByClassName("column1");
-                        var hideButton = b.getElementsByClassName("upload-btn-wrapper");
-                        var $images;
-                        var $buttons;
-                        for (i = 0; i < imageOutput.length; i++) {
-                            $images = $(imageOutput[i]);
+                            $(imageID).append('<img src="' + e.target.result + '" width="100%" />');
+                            $(buttons).hide();
                         }
-                        for (i = 0; i < hideButton.length; i++) {
-                            $buttons = $(hideButton[i]);
-                        }
-                        $images.append('<img src="' + e.target.result + '" width="100%" />')
-                        $buttons.hide();
-                    }
-                    reader.readAsDataURL(this);
                 }
 
-            });
 
+                if (input.files[0].type.match('video.*')) {
+                        reader.onload = function (e) {
+                            $(imageID).append('<video src="' + e.target.result + '" width="100%" controls/>');
+                            $(buttons).hide();
+                        }
+                }
+
+
+                if (input.files[0].type.match('audio.*')) {
+                        reader.onload = function (e) {
+                            $(imageID).append('<audio src="' + e.target.result + '" width="100%" controls/>');
+                            $(buttons).hide();
+                        }
+                }
+
+
+                if (input.files[0].type.match('doc.*')) {
+                            reader.onload = function (e) {
+                                $(imageID).append('<embed  src="' + e.target.result + '" width="100%" />');
+                                $(buttons).hide();
+                            }
+                }
+
+
+
+                reader.readAsDataURL(this);
+            });
         }
     }
 
@@ -186,10 +221,6 @@
 
         }
     };
-
-
-
-
 
 </script>
 

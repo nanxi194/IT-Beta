@@ -33,7 +33,7 @@ public class ImageService {
 
     public void writeImageToResponse(long id, HttpServletResponse response) throws IOException {
         response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-        response.setHeader("Cache-Control", "max-age=2628000");
+        response.setHeader("Cache-Control", "no-store");
 
         DatabaseFile imageFile = databaseFileRepository.findById(id);
 
@@ -47,7 +47,7 @@ public class ImageService {
 
     public void writeDisplayToResponse(long id, HttpServletResponse response) throws IOException {
         response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-        response.setHeader("Cache-Control", "max-age=2628000");
+        response.setHeader("Cache-Control", "no-cache, no-store");
 
         Project project = projectRepository.findById(id);
 

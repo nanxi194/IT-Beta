@@ -19,8 +19,10 @@
 <body>
 
 <a th:href="@{/user/{username}(username=${#authentication.name})}">
-    <i class="fas fa-less-than" style="padding: 5px; color:#0F83C3"> Back </i>
+    <i class="fas fa-less-than" style="padding: 5px; color:#4E5D6B"> Back </i>
 </a>
+
+<p th:text="${projectName}" class="title"></p>
 
 <div class="main">
     <div th:each="index: ${#numbers.sequence(0, imageIDs.size()-1)}">
@@ -30,7 +32,7 @@
                     <img th:src="@{/image/{username}/{id}(username=${#authentication.name}, id=${imageIDs.get(index)})}" style="width:100%">
                 </div>
                 <div class="column">
-                    <p th:text="${descriptions.get(index)}" style="text-align: center"></p>
+                    <div class="description center" th:text="${descriptions.get(index)}" ></div>
                 </div>
             </div>
         </div>
@@ -40,6 +42,7 @@
 
 
 
-
 </body>
+
+
 </html>

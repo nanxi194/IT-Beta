@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -22,6 +23,14 @@ public class ProjectController {
     @Autowired
     DatabaseFileRepository databaseFileRepository;
 
+    List<String> IMAGE_TYPE = new ArrayList<>(Arrays.asList("image/jpeg", "image/jpg", "image/png", "image/gif"));
+
+    List<String> AUDIO_TYPE = new ArrayList<>(Arrays.asList("audio/mpeg", "audio/mp4"));
+
+    List<String> VIDEO_TYPE = new ArrayList<>(Arrays.asList("video/mp4", "application/mp4"));
+
+    List<String> DOC_TYPE = new ArrayList<>(Arrays.asList("application/pdf"));
+
 
     @GetMapping("/projects/{username}/{id}")
     public String displayProject(@PathVariable String username, @PathVariable String id, Model model){
@@ -30,17 +39,38 @@ public class ProjectController {
 
         Iterable<DatabaseFile> files = databaseFileRepository.findAllByProject(project);
 
-        List<Long> imageList = new ArrayList<>();
+        List<Long> fileList = new ArrayList<>();
 
         List<String> descriptionList = new ArrayList<>();
 
+        List<String> typeList = new ArrayList<>();
+
+        String projectName = project.getProjectName();
+
+
         for(DatabaseFile file:files){
-            imageList.add(file.getId());
+            fileList.add(file.getId());
             descriptionList.add(file.getDescription());
+            if (IMAGE_TYPE.contains(file.getFileType())){
+                typeList.add("image");
+            }
+            if (AUDIO_TYPE.contains(file.getFileType())){
+                typeList.add("audio");
+            }
+            if (VIDEO_TYPE.contains(file.getFileType())){
+                typeList.add("video");
+            }
+            if (DOC_TYPE.contains(file.getFileType())){
+                typeList.add("doc");
+            }
         }
 
-        model.addAttribute("imageIDs", imageList);
+        model.addAttribute("fileIDs", fileList);
+        model.addAttribute("typeList", typeList);
         model.addAttribute("descriptions", descriptionList);
+        model.addAttribute("projectName", projectName);
+        model.addAttribute("projectID", id);
+
 
         return "project";
     }
