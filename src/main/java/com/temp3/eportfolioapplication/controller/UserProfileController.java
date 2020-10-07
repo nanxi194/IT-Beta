@@ -155,7 +155,7 @@ public class UserProfileController {
 
         model.addAttribute("havePic", havePic);
 
-        return "newTemplate";
+        return "profile";
     }
 
 }
