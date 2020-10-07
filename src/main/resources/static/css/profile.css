@@ -155,3 +155,17 @@ input[type="submit"] {
     text-align: center;
 
 }
+
+
+/* about me part */
+
+.userPic{
+    position: relative;
+    top: 0vw;
+    left:24vw;
+}
+
+.title{
+    color: #2474A6;
+    font-size: 1vw;
+}
