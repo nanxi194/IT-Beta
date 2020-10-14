@@ -1,4 +1,9 @@
 * {
+
+    font-family: Arial;
+}
+
+* {
     box-sizing: border-box;
 }
 
@@ -76,6 +81,6 @@ input[type="submit"] {
     vertical-align: middle;
     padding: 0;
     border: none;
-    color: white;
+    color: #2474a6;
 }
 

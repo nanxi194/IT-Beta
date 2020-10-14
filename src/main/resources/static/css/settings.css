@@ -1,4 +1,9 @@
 * {
+
+    font-family: Arial;
+}
+
+* {
     box-sizing: border-box;
 }
 
@@ -18,7 +23,7 @@ body {
     vertical-align: middle;
     padding: 0;
     border: none;
-    color: white;
+    color: #2474a6;
 }
 
 

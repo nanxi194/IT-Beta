@@ -16,7 +16,6 @@ body {
 
 .button{
     border: 1px solid white;
-    border-radius: 50px;
     padding:10px 10px;
 
 }
@@ -118,7 +117,6 @@ p{
 
 .nav-login-b{
     border: 1px solid #2474A6;
-    border-radius: 50px;
     padding: 10px 20px;
     background: rgba(218, 218, 218, 0.13);
     margin-right:30px;
@@ -133,7 +131,6 @@ p{
 .nav-register-b{
     border: 1px solid #2474A6;
     background: #2474A6;
-    border-radius: 50px;
     padding: 10px 20px;
 }
 
