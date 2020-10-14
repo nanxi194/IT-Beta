@@ -1,9 +1,4 @@
 * {
-
-    font-family: Arial;
-}
-
-* {
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
@@ -97,7 +92,7 @@ input[type="submit"] {
     vertical-align: middle;
     padding: 0;
     border: none;
-    color: #2474a6;
+    color: white;
 }
 
 

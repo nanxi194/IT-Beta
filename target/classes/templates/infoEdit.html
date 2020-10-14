@@ -2,65 +2,131 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Project edit</title>
+    <title>Info edit</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link th:href="@{/css/infoEdit.css}" rel="stylesheet" type="text/css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
-<h1 th:text="${prevInfo.lastName}">EDIT YOUR FILE</h1>
+<nav class="navbar sticky-top navbar-expand-lg" style="background-color: #ffffff">
+
+    <a class="navbar-brand text-white" th:href="@{/user/{username}(username=${#authentication.name})}">
+        <i class="fas fa-less-than" style="padding: 5px; color:white"></i>
+    </a>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+
+            <a th:href="@{/settings}">
+                <i class="fas fa-cog" style="padding: 5px; color:#2474a6"></i>
+            </a>
+
+            <a th:href="@{/home}">
+                <i class="fas fa-home" style="padding: 5px; color:#2474a6"></i>
+            </a>
+
+
+            <form sec:authorize="isFullyAuthenticated()" th:action="@{/logout}" method="post">
+                <input type="submit" value="Log out"/>
+            </form>
+
+            <a sec:authorize="isAnonymous()" th:href="@{/login}">
+                Login
+            </a>
+
+        </div>
+    </div>
+
+</nav>
+
+
+<div class="main">
+
 <form th:action="@{/profile/{username}/edit(username=${#authentication.name})}" th:object="${userInfo}"method="POST" enctype="multipart/form-data">
 
+    <div class="info_row">
+        <div class="info_column">
+            <div><img class="myImg" id="output"/></div>
+            <br><div class="upload-btn-wrapper">
+                <button class="btn">Profile Photo</button>
+                <input type="file" name="picture" onchange="loadFile(event)"/>
+            </div>
+        </div>
 
+        <div class="info_column2">
+            <div class="title form-group">
+                <label for="firstName">First Name:
+                    <input class="form-control" name="infos" type="text" id="firstname"  th:value="${prevInfo?.firstName}" required/>
+                </label>
+            </div>
 
-    <div>
-        <input type="file" name="picture"/>
+            <div class="title form-group">
+                <label for="lastname">Last Name:
+                    <input class="form-control" name="infos" type="text" th:value="${prevInfo?.lastName}"  id="lastname" required/>
+                </label>
+            </div>
+
+            <div class="title form-group">
+                <label for="contactInfo">Contact Info:<br>
+                    <textarea class="form-control" name="infos" th:text="${prevInfo?.contactInfo}" id="contactInfo" required></textarea>
+                </label>
+            </div>
+
+            <div class="title form-group">
+                <label for="location">Location:<br>
+                    <textarea class="form-control" name="infos" th:text="${prevInfo?.location}" id="location" required></textarea>
+                </label>
+            </div>
+
+            <div class="title form-group">
+                <label for="education">Education:<br>
+                    <textarea class="form-control" name="infos" th:text="${prevInfo?.education}" id="education" required></textarea>
+                </label>
+            </div>
+
+            <div class="title form-group">
+                <label for="workExp">Work Experience:<br>
+                    <textarea rows="4" class="form-control" name="infos"  th:text="${prevInfo?.workExp}" id="workExp" required></textarea>
+                </label>
+            </div>
+
+            <div class="title form-group">
+                <label for="summary">Profile Summary:<br>
+                    <textarea rows="4" class="form-control" name="infos" th:text="${prevInfo?.summary}" id="summary" required></textarea>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center">
+        <input value="Change" type="submit"/>
     </div>
 
-    <div>
-        <label for="firstName">First Name
-            <input name="infos" type="text" id="firstname"  th:value="${prevInfo?.firstName}" required/>
-        </label>
-    </div>
-
-    <div>
-        <label for="lastname">Last Name
-            <input name="infos" th:value="${prevInfo?.lastName}" type="text"  id="lastname" required/>
-        </label>
-    </div>
-
-    <div>
-        <label for="contactInfo">Contact Info
-            <textarea name="infos" type="text" th:text="${prevInfo?.contactInfo}" id="contactInfo" required></textarea>
-        </label>
-    </div>
-
-    <div>
-        <label for="location">Location
-            <textarea name="infos" type="text" th:text="${prevInfo?.location}" id="location" required></textarea>
-        </label>
-    </div>
-
-    <div>
-        <label for="education">Education
-            <textarea name="infos" type="text" th:text="${prevInfo?.education}" id="education" required></textarea>
-        </label>
-    </div>
-
-    <div>
-        <label for="workExp">Work Experience
-            <textarea name="infos" type="text" th:text="${prevInfo?.workExp}" id="workExp" required></textarea>
-        </label>
-    </div>
-
-    <div>
-        <label for="summary">Profile Summary
-            <textarea name="infos" type="text" th:text="${prevInfo?.summary}" id="summary" required></textarea>
-        </label>
-    </div>
 
 
-    <input type="submit" value="change">
+
+
+
 
 </form>
+</div>
 
 
 </body>
 </html>
+
+<script>
+    var loadFile = function(event) {
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function() {
+            URL.revokeObjectURL(output.src)
+        }
+    };
+</script>

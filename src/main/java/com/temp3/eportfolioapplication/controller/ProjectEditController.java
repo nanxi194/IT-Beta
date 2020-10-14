@@ -85,8 +85,6 @@ public class ProjectEditController {
         model.addAttribute("projectName", projectName);
         model.addAttribute("projectID", id);
 
-        System.out.println(typeList.toString());
-
         return "projectEdit";
     }
 
@@ -156,4 +154,20 @@ public class ProjectEditController {
 
         return "redirect:/projects/" +  principal.getName() + "/" + id;
     }
+
+    @PostMapping("/projects/delete/{id}")
+    public String deleteProject(@PathVariable String id, Principal principal){
+        Project project = projectRepository.findById(Long.parseLong(id));
+
+        Iterable<DatabaseFile> oldFiles = databaseFileRepository.findAllByProject(project);
+
+        for(DatabaseFile file:oldFiles){
+            databaseFileRepository.delete(file);
+        }
+
+        projectRepository.delete(project);
+
+        return "redirect:/user/" + principal.getName();
+    }
+
 }

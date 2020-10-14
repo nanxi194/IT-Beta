@@ -15,21 +15,21 @@
 </head>
 <body>
 
-<nav class="navbar sticky-top navbar-expand-lg" style="background-color: #2474a6">
+<nav class="navbar sticky-top navbar-expand-lg" style="background-color: white">
 
     <a class="navbar-brand text-white" th:href="@{/projects/{username}/{id}(id = ${projectID}, username=${#authentication.name})}">
-        <i class="fas fa-less-than" style="padding: 5px; color:white"></i>
+        <i class="fas fa-less-than" style="padding: 5px; color:#2474a6"></i>
     </a>
 
     <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
         <div class="navbar-nav">
 
             <a th:href="@{/settings}">
-                <i class="fas fa-cog" style="padding: 5px; color:white"></i>
+                <i class="fas fa-cog" style="padding: 5px; color:#2474a6"></i>
             </a>
 
             <a th:href="@{/home}">
-                <i class="fas fa-home" style="padding: 5px; color:white"></i>
+                <i class="fas fa-home" style="padding: 5px; color:#2474a6"></i>
             </a>
 
 
@@ -42,16 +42,22 @@
 
 </nav>
 
-<h1 th:inline="text">EDIT YOUR FILE</h1>
+<h1 th:inline="text">EDIT YOUR PROJECT</h1>
+
+<div class="delete" style="padding-left: 82%">
+    <form th:action="@{/projects/delete/{id}(id = ${projectID})}" method="post" enctype="multipart/form-data">
+        <input type="submit" value="Delete this project">
+    </form>
+</div>
+
+
+
 <div class="main">
 <form th:action="@{${#httpServletRequest.requestURI}}" method="POST" enctype="multipart/form-data">
-
-
-
     <div class="row1">
         <div class="column1">
             <div class="upload-btn-wrapper1">
-                <button class="btn">Upload Your Document</button>
+                <button class="btn">Change Display Picture</button>
                 <input type="file" name="display" onchange="loadFile(event)"/>
             </div>
             <img id="output" width="100%" />
@@ -68,6 +74,7 @@
             <button class="btn">Upload Your Document</button>
             <input th:id="${index}" type="file" name="files" onclick="getPID(this);" onchange="readURL2(this)"/>
         </div>
+
         <div class="row1">
         <div class="column1" th:id="'c-' + ${index}">
             <div th:if="${typeList.get(index) == 'image'}" >
@@ -111,6 +118,9 @@
 
 </form>
 </div>
+
+
+
 
 
 </body>
@@ -162,8 +172,6 @@
         addElement('box', 'p', 'file-' + fileId, html);
         imageId++;
     }
-
-
 
 
     var remove = function(){
@@ -235,8 +243,6 @@
         output.src = URL.createObjectURL(event.target.files[0]);
         output.onload = function() {
             URL.revokeObjectURL(output.src)
-            $('.upload-btn-wrapper1').hide();
-
         }
     };
 

@@ -13,129 +13,120 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
+<nav class="navbar sticky-top navbar-expand-lg" style="background-color: #ffffff">
+
+    <a class="navbar-brand text-white" th:href="@{/user/{username}(username=${#authentication.name})}">
+        <i class="fas fa-less-than" style="padding: 5px; color:#2474a6"></i>
+    </a>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+
+            <a th:href="@{/settings}">
+                <i class="fas fa-cog" style="padding: 5px; color:#2474a6"></i>
+            </a>
+
+            <a th:href="@{/home}">
+                <i class="fas fa-home" style="padding: 5px; color:#2474a6"></i>
+            </a>
+
+
+            <form sec:authorize="isFullyAuthenticated()" th:action="@{/logout}" method="post">
+                <input type="submit" value="Log out"/>
+            </form>
+
+            <a sec:authorize="isAnonymous()" th:href="@{/login}">
+                Login
+            </a>
+
+        </div>
+    </div>
+
+</nav>
+
+
+<div class="main">
 
 <form th:action="@{/profile/{username}/edit(username=${#authentication.name})}" th:object="${userInfo}"method="POST" enctype="multipart/form-data">
 
-    <nav class="navbar sticky-top navbar-expand-lg" style="background-color: #ffffff">
-
-        <a class="navbar-brand text-white" th:href="@{/hello}">
-            <i class="fas fa-less-than" style="padding: 5px; color:#2474a6"></i>
-        </a>
-
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-
-                <a th:href="@{/settings}">
-                    <i class="fas fa-cog" style="padding: 5px; color:#2474a6"></i>
-                </a>
-
-                <a th:href="@{/home}">
-                    <i class="fas fa-home" style="padding: 5px; color:#2474a6"></i>
-                </a>
-
-
-                <form sec:authorize="isFullyAuthenticated()" th:action="@{/logout}" method="post">
-                    <input type="submit" value="Log out"/>
-                </form>
-
-                <a sec:authorize="isAnonymous()" th:href="@{/login}">
-                    Login
-                </a>
-
+    <div class="info_row">
+        <div class="info_column">
+            <div><img class="myImg" id="output"/></div>
+            <br><div class="upload-btn-wrapper">
+                <button class="btn">Profile Photo</button>
+                <input type="file" name="picture" onchange="loadFile(event)"/>
             </div>
         </div>
 
-    </nav>
+        <div class="info_column2">
+            <div class="title form-group">
+                <label for="firstName">First Name:
+                    <input class="form-control" name="infos" type="text" id="firstname"  th:value="${prevInfo?.firstName}" required/>
+                </label>
+            </div>
 
-    <div class = "userPic">
-        <img th:if="${havePic}" th:src="@{/user/{username}/picture(username=${#authentication.name})}">
-        <img th:if="!${havePic}" th:src="@{/images/account-img.png}">
+            <div class="title form-group">
+                <label for="lastname">Last Name:
+                    <input class="form-control" name="infos" type="text" th:value="${prevInfo?.lastName}"  id="lastname" required/>
+                </label>
+            </div>
+
+            <div class="title form-group">
+                <label for="contactInfo">Contact Info:<br>
+                    <textarea class="form-control" name="infos" th:text="${prevInfo?.contactInfo}" id="contactInfo" required></textarea>
+                </label>
+            </div>
+
+            <div class="title form-group">
+                <label for="location">Location:<br>
+                    <textarea class="form-control" name="infos" th:text="${prevInfo?.location}" id="location" required></textarea>
+                </label>
+            </div>
+
+            <div class="title form-group">
+                <label for="education">Education:<br>
+                    <textarea class="form-control" name="infos" th:text="${prevInfo?.education}" id="education" required></textarea>
+                </label>
+            </div>
+
+            <div class="title form-group">
+                <label for="workExp">Work Experience:<br>
+                    <textarea rows="4" class="form-control" name="infos"  th:text="${prevInfo?.workExp}" id="workExp" required></textarea>
+                </label>
+            </div>
+
+            <div class="title form-group">
+                <label for="summary">Profile Summary:<br>
+                    <textarea rows="4" class="form-control" name="infos" th:text="${prevInfo?.summary}" id="summary" required></textarea>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center">
+        <input value="Change" type="submit"/>
     </div>
 
 
-    <button class="upload" type="file" name="picture">Upload</button>
-
-    <div class = "title">
-        <div class = "firstname">
-            <label for="firstName">First Name:
-                <input class="infos-name" name="infos" type="text" id="firstname"  th:value="${prevInfo?.firstName}" required/>
-            </label>
-        </div>
-
-        <div class="lastname">
-            <label for="lastname">Last Name:
-                <input class="infos-name" name="infos" th:value="${prevInfo?.lastName}" type="text"  id="lastname" required/>
-            </label>
-        </div>
-
-        <div class="contactInfo">
-            <label for="contactInfo">Contact Info:<br>
-                <textarea class="infos" name="infos" type="text" th:text="${prevInfo?.contactInfo}" id="contactInfo" required></textarea>
-            </label>
-        </div>
-
-        <div class="location">
-            <label for="location">Location:<br>
-                <textarea class="infos" name="infos" type="text" th:text="${prevInfo?.location}" id="location" required></textarea>
-            </label>
-        </div>
-
-        <div class="education">
-            <label for="education">Education:<br>
-                <textarea class="infos" name="infos" type="text" th:text="${prevInfo?.education}" id="education" required></textarea>
-            </label>
-        </div>
-
-        <div class="workExp">
-            <label for="workExp">Work Experience:<br>
-                <textarea class="infos" name="infos" type="text" th:text="${prevInfo?.workExp}" id="workExp" required></textarea>
-            </label>
-        </div>
-
-        <div class="summary">
-            <label for="summary">Profile Summary:<br>
-                <textarea class="infos" name="infos" type="text" th:text="${prevInfo?.summary}" id="summary" required></textarea>
-            </label>
-        </div>
-    </div>
 
 
-    <button class="change" type="submit">Change</button>
 
 
-    <footer>
-        <div class="row">
-            <div class="col span-1-of-2">
-                <ul class="footer-nav">
-                    <li><a href="#">About us</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Press</a></li>
-                    <li><a href="#">iOS App</a></li>
-                    <li><a href="#">Android App</a></li>
-                </ul>
-            </div>
-            <div class="col span-1-of-2">
-                <ul class="social-links">
-                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                    <li><a href="#"><i class="fab fa-google"></i></a></li>
-                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="row">
-            <p>
-                Promote your business, showcase your art, set up an online shop or just test out new ideas. The ITPROJECT website builder has everything you need to create a fully personalized, high-quality free website.<br>
-
-                © 2006-2020 ITPROJECT.com, Inc
-            </p>
-
-        </div>
-    </footer>
 
 </form>
+</div>
 
 
 </body>
 </html>
+
+<script>
+    var loadFile = function(event) {
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function() {
+            URL.revokeObjectURL(output.src)
+        }
+    };
+</script>

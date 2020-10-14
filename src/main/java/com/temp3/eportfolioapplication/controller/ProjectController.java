@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +34,8 @@ public class ProjectController {
 
 
     @GetMapping("/projects/{username}/{id}")
-    public String displayProject(@PathVariable String username, @PathVariable String id, Model model){
+    public String displayProject(@PathVariable String username, @PathVariable String id, Model model,
+                                 Principal principal){
 
         Project project = projectRepository.findById(Long.parseLong(id));
 
@@ -65,11 +67,19 @@ public class ProjectController {
             }
         }
 
+        boolean showEdit = false;
+
+        if(principal != null && principal.getName().equals(username)){
+            showEdit = true;
+        }
+
         model.addAttribute("fileIDs", fileList);
         model.addAttribute("typeList", typeList);
         model.addAttribute("descriptions", descriptionList);
         model.addAttribute("projectName", projectName);
         model.addAttribute("projectID", id);
+        model.addAttribute("showEdit", showEdit);
+        model.addAttribute("username", username);
 
 
         return "project";

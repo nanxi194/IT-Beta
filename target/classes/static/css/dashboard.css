@@ -32,7 +32,7 @@ body {
 /* navigation bar */
 .topnav {
     overflow: hidden;
-    background-color: #2474A6;
+    border:#2474A6;
     margin-bottom: 100px;
 }
 
@@ -96,12 +96,12 @@ body {
 
 input[type="submit"] {
     background: transparent;
+    color:#2474A6;
     height: 28px;
     width: 70px;
     vertical-align: middle;
     padding: 0;
     border: none;
-    color: white;
 }
 
 

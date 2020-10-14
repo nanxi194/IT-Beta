@@ -76,7 +76,7 @@ public class ProfileInformationController {
 
         userRepository.save(currUser);
 
-        return "redirect:/hello";
+        return "redirect:/user/" + username;
     }
 
 

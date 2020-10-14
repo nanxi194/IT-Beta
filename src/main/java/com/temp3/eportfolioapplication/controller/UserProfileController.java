@@ -137,6 +137,8 @@ public class UserProfileController {
 
         model.addAttribute("userInfo", userInfo);
 
+        model.addAttribute("username", username);
+
         boolean havePic = false;
 
         if(userInfo != null && userInfo.getPicture() != null){
