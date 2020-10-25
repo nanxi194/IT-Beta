@@ -85,7 +85,11 @@ public class ProjectEditController {
         model.addAttribute("projectName", projectName);
         model.addAttribute("projectID", id);
 
-        return "projectEdit";
+        if(principal != null && principal.getName().equals(project.getUsername())){
+            return "projectEdit";
+        }
+
+        return "private";
     }
 
     @PostMapping("/projects/edit/{id}")

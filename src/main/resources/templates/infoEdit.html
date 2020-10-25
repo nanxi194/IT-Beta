@@ -63,43 +63,43 @@
         <div class="info_column2">
             <div class="title form-group">
                 <label for="firstName">First Name:
-                    <input class="form-control" name="infos" type="text" id="firstname"  th:value="${prevInfo?.firstName}" required/>
+                    <input cols="50" class="form-control" name="infos" type="text" id="firstname"  th:value="${prevInfo?.firstName}" required/>
                 </label>
             </div>
 
             <div class="title form-group">
                 <label for="lastname">Last Name:
-                    <input class="form-control" name="infos" type="text" th:value="${prevInfo?.lastName}"  id="lastname" required/>
+                    <input cols="50" class="form-control" name="infos" type="text" th:value="${prevInfo?.lastName}"  id="lastname" required/>
                 </label>
             </div>
 
             <div class="title form-group">
                 <label for="contactInfo">Contact Info:<br>
-                    <textarea class="form-control" name="infos" th:text="${prevInfo?.contactInfo}" id="contactInfo" required></textarea>
+                    <textarea cols="50" class="form-control" name="infos" th:text="${prevInfo?.contactInfo}" id="contactInfo" required></textarea>
                 </label>
             </div>
 
             <div class="title form-group">
                 <label for="location">Location:<br>
-                    <textarea class="form-control" name="infos" th:text="${prevInfo?.location}" id="location" required></textarea>
+                    <textarea cols="50" class="form-control" name="infos" th:text="${prevInfo?.location}" id="location" required></textarea>
                 </label>
             </div>
 
             <div class="title form-group">
                 <label for="education">Education:<br>
-                    <textarea class="form-control" name="infos" th:text="${prevInfo?.education}" id="education" required></textarea>
+                    <textarea cols="50" class="form-control" name="infos" th:text="${prevInfo?.education}" id="education" required></textarea>
                 </label>
             </div>
 
             <div class="title form-group">
                 <label for="workExp">Work Experience:<br>
-                    <textarea rows="4" class="form-control" name="infos"  th:text="${prevInfo?.workExp}" id="workExp" required></textarea>
+                    <textarea rows="8" cols="50" class="form-control" name="infos"  th:text="${prevInfo?.workExp}" id="workExp" required></textarea>
                 </label>
             </div>
 
             <div class="title form-group">
                 <label for="summary">Profile Summary:<br>
-                    <textarea rows="4" class="form-control" name="infos" th:text="${prevInfo?.summary}" id="summary" required></textarea>
+                    <textarea rows="8" cols="50" class="form-control" name="infos" th:text="${prevInfo?.summary}" id="summary" required></textarea>
                 </label>
             </div>
         </div>

@@ -1,15 +1,10 @@
 * {
-
-    font-family: Arial;
-}
-
-* {
     box-sizing: border-box;
+    font-family: Arial;
 }
 
 body {
     margin: 0;
-    font-family: Arial;
 }
 
 /* navigation bar */

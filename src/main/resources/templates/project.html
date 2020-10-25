@@ -35,10 +35,13 @@
             </a>
 
 
-            <form th:action="@{/logout}" method="post">
+            <form sec:authorize="isFullyAuthenticated()" th:action="@{/logout}" method="post">
                 <input type="submit" value="Log out"/>
             </form>
 
+            <a sec:authorize="isAnonymous()" th:href="@{/login}">
+                <input type="submit" value="Login"/>
+            </a>
         </div>
     </div>
 
@@ -46,7 +49,7 @@
 
 <p th:text="${projectName}" class="title"></p>
 
-<a th:href="@{/projects/edit/{id}(id = ${projectID})}" style="margin-left: 910px;">
+<a th:if="${showEdit}" th:href="@{/projects/edit/{id}(id = ${projectID})}" style="margin-left: 910px;">
     <button class="uploadButton"><i class="fas fa-plus"></i> Edit your project</button>
 </a>
 

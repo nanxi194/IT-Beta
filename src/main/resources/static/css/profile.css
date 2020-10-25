@@ -1,20 +1,14 @@
 * {
-
-    font-family: Arial;
-}
-
-* {
     box-sizing: border-box;
-    font-family: Arial;
+    font-family: Arial, serif;
 }
-
 
 body {
     margin: 0;
 }
 
 .main {
-    padding: 20px;
+    padding: 30px;
 }
 
 h1 {
@@ -50,7 +44,7 @@ h2 {
     transition-duration: 0.4s;
 }
 
-.uploadButton1 {
+.uploadButton:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
@@ -89,7 +83,8 @@ h2 {
 }
 
 .btn_group{
-    text-align: center;
+    text-align: left;
+    padding-top: 10px;
 }
 
 .btn {
@@ -105,6 +100,7 @@ h2 {
 
 .btn:hover {
     text-decoration:underline;
+    color: #404040;
 }
 
 .btn:active {
@@ -120,7 +116,6 @@ input[type="submit"] {
     border: none;
     color: #2474a6;
 }
-
 
 .modal {
     display: none;
@@ -160,53 +155,78 @@ input[type="submit"] {
 
 }
 
+/* about_me Modal */
 
-.about_me h1{
+.cardBox h1{
     font-size: 20px;
     word-break: break-all;
     text-align: center;
     font-style: normal;
     font-weight: 600;
     line-height: 58px;
-
+    align-items: center;
+    white-space:pre;
 }
 
-.about_me h2{
-    font-size: 14px;
+.cardBox span{
     word-break: break-all;
-    text-align: center;
     font-style: normal;
     font-weight: normal;
-    line-height: 44px;
-    white-space:pre;
+    font-size: 18px;
+    line-height: 22px;
+    align-items: center;
+    text-align: center;
+    padding: 6px;
+    color: #404040;
+}
 
+.cardBox p{
+    word-break: break-all;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    align-items: center;
+    text-align: center;
+    padding: 6px;
+    color: #404040;
+    white-space:pre;
+}
+
+.myImg{
+    width:150px;
+    height:150px;
+    object-fit:cover;
+    border-radius:50%;
+    text-align: center;
 }
 
 .info_column {
     float: left;
     width: 30%;
     padding: 10px;
+    height: 300px;
 }
 
-.info_column2 {
+.project_column{
     float: left;
     width: 70%;
     padding: 10px;
 }
 
-.info_row:after {
+.resume_row:after {
     content: "";
     display: table;
     clear: both;
 }
 
-.myImg{
-    width:250px;
-    height:250px;
-    object-fit:cover;
-    border-radius:50%;
-    text-align: right;
+
+.cardBox{
+    padding: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
 }
+
 
 /* video Modal */
 .videoModal {

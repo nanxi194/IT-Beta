@@ -1,10 +1,6 @@
 * {
-
-    font-family: Arial;
-}
-
-* {
     box-sizing: border-box;
+    font-family: Arial, serif;
 }
 
 
@@ -12,7 +8,6 @@ html { height: 100% }
 
 body {
     margin: 0;
-    font-family: Arial;
     min-height: 100%;
 }
 

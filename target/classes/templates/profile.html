@@ -49,235 +49,220 @@
 
         <div class="main">
             <h1>
-                <p th:inline="text">[[${#httpServletRequest.remoteUser}]]</p>
+                <p th:text="${username}"></p>
             </h1>
             <h2>PORTFOLIO</h2>
 
-        <div id="myBtnContainer" class="btn_group">
-            <p class="btn" onclick="filterSelection('projects')"> Projects</p>
-            <p class="btn" onclick="filterSelection('images')"> Photos</p>
-            <p class="btn" onclick="filterSelection('audio')"> Audios</p>
-            <p class="btn" onclick="filterSelection('video')"> Videos</p>
-            <p class="btn" onclick="filterSelection('documents')"> Essays</p>
-            <p class="btn" onclick="filterSelection('about_me')"> About me</p>
-        </div>
+            <div class="resume_row">
+                <div class="info_column">
+                    <div class="cardBox">
+                        <div style="text-align: center">
+                            <img class="myImg" th:if="${havePic}" th:src="@{/user/{username}/picture(username=${#authentication.name})}">
+                            <img th:if="!${havePic}" th:src="@{/images/account-img.png}" style="width:150px; height:150px;">
+                        </div>
 
-            <div class="row">
-                <div class="column projects">
-                    <a th:if="${showEdit}" th:href="@{/upload}" style="margin-left: 1000px;">
-                        <button class="uploadButton"><i class="fas fa-plus"></i> Upload a new document</button>
-                    </a>
-                    <div class="container">
-                        <div th:each="index: ${#numbers.sequence(0, projectIDs.size()-1, 3)}">
-                            <div class="row row-cols-3">
-                                <div class = "col">
-                                    <a th:href="@{/projects/{username}/{id}(username=${username}, id=${projectIDs.get(index)})}">
-                                        <img th:if="${displayIDs.get(index) == 0}" th:src="@{/images/defaultProject.jpg}" style="width:100%" alt="image">
-                                        <img th:if="${displayIDs.get(index) != 0}"  th:src="@{/display/projects/{username}/{id}(username=${#authentication.name}, id=${displayIDs.get(index)})}" style="width:100%" alt="image">
-                                    </a>
-                                    <div>
-                                        <p th:text="${projectNames.get(index)}"></p>
-                                    </div>
-
-                                </div>
-                                <div class = "col">
-                                    <a th:if="${(index + 1) < projectIDs.size()}" th:href="@{/projects/{username}/{id}(username=${username}, id=${projectIDs.get(index + 1)})}">
-                                        <img th:if="${displayIDs.get(index + 1) == 0}" th:src="@{/images/defaultProject.jpg}" style="width:100%">
-                                        <img th:if="${displayIDs.get(index + 1) != 0}"  th:src="@{/display/projects/{username}/{id}(username=${#authentication.name}, id=${displayIDs.get(index + 1)})}" style="width:100%">
-                                    </a>
-                                    <div th:if="${(index + 1) < projectIDs.size()}">
-                                        <p th:text="${projectNames.get(index + 1)}"></p>
-                                    </div>
-
-
-                                </div>
-                                <div class = "col">
-                                    <a th:if="${(index + 2) < projectIDs.size()}" th:href="@{/projects/{username}/{id}(username=${username}, id=${projectIDs.get(index + 2)})}" >
-                                        <img th:if="${displayIDs.get(index + 2) == 0}" th:src="@{/images/defaultProject.jpg}" style="width:100%">
-                                        <img th:if="${displayIDs.get(index + 2) != 0}"  th:src="@{/display/projects/{username}/{id}(username=${#authentication.name}, id=${displayIDs.get(index + 2)})}" style="width:100%">
-                                    </a>
-                                    <div th:if="${(index + 2) < projectIDs.size()}">
-                                        <p th:text="${projectNames.get(index + 2)}"></p>
-                                    </div>
-
-                                </div>
+                        <div>
+                            <h1 th:text="${userInfo?.firstName}+' '+${userInfo?.lastName}"></h1>
+                            <h1><i class="fas fa-phone-alt"></i> Contact Info</h1>
+                            <p th:text="${userInfo?.contactInfo}"></p>
+                            <h1><i class="fas fa-map-marker-alt"></i> Location</h1>
+                            <p th:text="${userInfo?.location}"></p>
+                            <h1><i class="fas fa-graduation-cap"></i> Education</h1>
+                            <p th:text="${userInfo?.education}"></p>
+                            <h1><i class="fas fa-suitcase"></i> Work Experience</h1>
+                            <p th:text="${userInfo?.workExp}"></p>
+                            <h1><i class="fas fa-paper-plane"></i> Summary</h1>
+                            <div style="text-align: center">
+                                <span th:text="${userInfo?.summary}"></span>
                             </div>
+                        </div>
+
+                        <div style="text-align: center">
+                            <a th:if="${showEdit}" th:href="@{/profile/{username}/edit(username=${#authentication.name})}">
+                                <button class="uploadButton"><i class="fas fa-plus"></i> Edit your information</button>
+                            </a>
                         </div>
                     </div>
                 </div>
 
-                <div class="column images">
-                    <a th:if="${showEdit}" th:href="@{/upload}" style="margin-left: 1000px;">
-                        <button class="uploadButton"><i class="fas fa-plus"></i> Upload a new document</button>
-                    </a>
-                    <div class="container">
-                            <div th:each="index: ${#numbers.sequence(0, imageIDs.size()-1, 3)}">
-                                <div class="row">
-                                <div class = "col hover-shadow cursor" onclick="openModal();">
-                                <img th:src="@{/image/{username}/{id}(username=${#authentication.name}, id=${imageIDs.get(index)})}" alt="Images" style="width:100%">
-                                </div>
-                                <div class = "col hover-shadow cursor" onclick="openModal();">
-                                <img th:if="${(index + 1) < imageIDs.size()}" class = "col " th:src="@{/image/{username}/{id}(username=${#authentication.name}, id=${imageIDs.get(index+1)})}" alt="Images" style="width:100%">
-                                </div>
-                                <div class = "col hover-shadow cursor" onclick="openModal();">
-                                <img th:if="${(index + 2) < imageIDs.size()}" class = "col " th:src="@{/image/{username}/{id}(username=${#authentication.name}, id=${imageIDs.get(index+2)})}" alt="Images" style="width:100%">
-                                </div>
-                            </div>
-                        </div>
+
+
+
+                <div class="project_column">
+                    <div style="text-align: right">
+                        <a th:if="${showEdit}" th:href="@{/upload}">
+                            <button class="uploadButton"><i class="fas fa-plus"></i> Upload a new document</button>
+                        </a>
                     </div>
 
-                    <div id="myModal" class="modal">
-                            <div class="modal-content">
-                                <div class="mySlides">
-                                    <div th:each="imageid : ${imageIDs}">
-                                    <img th:src="@{/image/{username}/{id}(username=${#authentication.name}, id=${imageid})}" alt="Images" style="width:100%">
+                    <div id="myBtnContainer" class="btn_group">
+                        <p class="btn" onclick="filterSelection('projects')"> Projects</p>
+                        <p class="btn" onclick="filterSelection('images')"> Photos</p>
+                        <p class="btn" onclick="filterSelection('audio')"> Audios</p>
+                        <p class="btn" onclick="filterSelection('video')"> Videos</p>
+                        <p class="btn" onclick="filterSelection('documents')"> Essays</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="column projects">
+                            <div class="container">
+                                <div th:each="index: ${#numbers.sequence(0, projectIDs.size()-1, 3)}">
+                                    <div class="row row-cols-3">
+                                        <div class = "col">
+                                            <a th:href="@{/projects/{username}/{id}(username=${username}, id=${projectIDs.get(index)})}">
+                                                <img th:if="${displayIDs.get(index) == 0}" th:src="@{/images/defaultProject.jpg}" style="width:100%" alt="image">
+                                                <img th:if="${displayIDs.get(index) != 0}"  th:src="@{/display/projects/{username}/{id}(username=${#authentication.name}, id=${displayIDs.get(index)})}" style="width:100%" alt="image">
+                                            </a>
+                                            <div>
+                                                <p th:text="${projectNames.get(index)}"></p>
+                                            </div>
+
+                                        </div>
+                                        <div class = "col">
+                                            <a th:if="${(index + 1) < projectIDs.size()}" th:href="@{/projects/{username}/{id}(username=${username}, id=${projectIDs.get(index + 1)})}">
+                                                <img th:if="${displayIDs.get(index + 1) == 0}" th:src="@{/images/defaultProject.jpg}" style="width:100%">
+                                                <img th:if="${displayIDs.get(index + 1) != 0}"  th:src="@{/display/projects/{username}/{id}(username=${#authentication.name}, id=${displayIDs.get(index + 1)})}" style="width:100%">
+                                            </a>
+                                            <div th:if="${(index + 1) < projectIDs.size()}">
+                                                <p th:text="${projectNames.get(index + 1)}"></p>
+                                            </div>
+
+
+                                        </div>
+                                        <div class = "col">
+                                            <a th:if="${(index + 2) < projectIDs.size()}" th:href="@{/projects/{username}/{id}(username=${username}, id=${projectIDs.get(index + 2)})}" >
+                                                <img th:if="${displayIDs.get(index + 2) == 0}" th:src="@{/images/defaultProject.jpg}" style="width:100%">
+                                                <img th:if="${displayIDs.get(index + 2) != 0}"  th:src="@{/display/projects/{username}/{id}(username=${#authentication.name}, id=${displayIDs.get(index + 2)})}" style="width:100%">
+                                            </a>
+                                            <div th:if="${(index + 2) < projectIDs.size()}">
+                                                <p th:text="${projectNames.get(index + 2)}"></p>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                    </div>
-
-                </div>
 
 
-                <div class="column audio">
-                    <a th:if="${showEdit}" th:href="@{/upload}" style="margin-left: 1000px;">
-                        <button class="uploadButton"><i class="fas fa-plus"></i> Upload a new document</button>
-                    </a>
-                    <div class="container">
-                        <div th:each="index: ${#numbers.sequence(0, audioIDs.size()-1, 3)}">
-                            <div class="row row-cols-3">
+                        </div>
 
-                                <div class = "col">
-                                    <div class="popup" onclick="playAudio(this);">
-                                        <img th:src="@{/images/music.jpg}" style="width:100%; padding-left: 65px;">
-                                        <span class="popupBox" th:id="${index}">
+
+                        <div class="column images">
+                            <div class="container">
+                                <div th:each="index: ${#numbers.sequence(0, imageIDs.size()-1, 3)}">
+                                    <div class="row">
+                                        <div class = "col hover-shadow cursor" onclick="openModal();">
+                                            <img th:src="@{/image/{username}/{id}(username=${#authentication.name}, id=${imageIDs.get(index)})}" alt="Images" style="width:100%">
+                                        </div>
+                                        <div class = "col hover-shadow cursor" onclick="openModal();">
+                                            <img th:if="${(index + 1) < imageIDs.size()}" class = "col " th:src="@{/image/{username}/{id}(username=${#authentication.name}, id=${imageIDs.get(index+1)})}" alt="Images" style="width:100%">
+                                        </div>
+                                        <div class = "col hover-shadow cursor" onclick="openModal();">
+                                            <img th:if="${(index + 2) < imageIDs.size()}" class = "col " th:src="@{/image/{username}/{id}(username=${#authentication.name}, id=${imageIDs.get(index+2)})}" alt="Images" style="width:100%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="myModal" class="modal">
+                                <div class="modal-content">
+                                    <div class="mySlides">
+                                        <div th:each="imageid : ${imageIDs}">
+                                            <img th:src="@{/image/{username}/{id}(username=${#authentication.name}, id=${imageid})}" alt="Images" style="width:100%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="column audio">
+                            <div class="container">
+                                <div th:each="index: ${#numbers.sequence(0, audioIDs.size()-1, 2)}">
+                                    <div class="row row-cols-2">
+                                        <div class = "col">
+                                            <div class="popup" onclick="playAudio(this);">
+                                                <img th:src="@{/images/music.jpg}" style="width:100%; padding-left: 65px;">
+                                                <span class="popupBox" th:id="${index}">
                                             <audio controls src th:src="@{/audio/{username}/{id}(username=${#authentication.name}, id=${audioIDs.get(index)})}" alt="Audio" style="width:100%"></audio>
                                         </span>
-                                    </div>
-                                </div>
-
-                                <div class = "col">
-                                    <div class="popup" onclick="playAudio(this);">
-                                        <img th:src="@{/images/music.jpg}"  style="width:100%; padding-left: 65px;">
-                                        <span class="popupBox" th:id="${index+1}">
+                                            </div>
+                                        </div>
+                                        <div class = "col">
+                                            <div class="popup" onclick="playAudio(this);">
+                                                <img th:if="${(index + 1) < audioIDs.size()}" th:src="@{/images/music.jpg}"  style="width:100%; padding-left: 65px;">
+                                                <span class="popupBox" th:id="${index+1}">
                                             <audio th:if="${(index + 1) < audioIDs.size()}" controls src th:src="@{/audio/{username}/{id}(username=${#authentication.name}, id=${audioIDs.get(index+1)})}" alt="Audio" style="width:100%"></audio>
                                         </span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
-                                <div class = "col">
-                                    <div class="popup" onclick="playAudio(this);">
-                                        <img th:src="@{/images/music.jpg}"  style="width:100%; padding-left: 65px;">
-                                        <span class="popupBox" th:id="${index+2}">
-                                            <audio th:if="${(index + 2) < audioIDs.size()}" controls src th:src="@{/audio/{username}/{id}(username=${#authentication.name}, id=${audioIDs.get(index+2)})}" alt="Audio" style="width:100%"></audio>
-                                        </span>
+                        <div class="column video">
+                            <div class="container">
+                                <div th:each="index: ${#numbers.sequence(0, videoIDs.size()-1, 2)}">
+                                    <div class="row row-cols-2">
+                                        <div class = "col">
+                                            <video width="320" height="240" controls onclick="openVideoModal();">
+                                                <source th:src="@{/video/{username}/{id}(username=${#authentication.name}, id=${videoIDs.get(index)})}" alt="Video">
+                                            </video>
+                                        </div>
+
+                                        <div class = "col">
+                                            <video th:if="${(index + 1) < videoIDs.size()}" width="320" height="240" controls onclick="openVideoModal();">
+                                                <source th:src="@{/video/{username}/{id}(username=${#authentication.name}, id=${videoIDs.get(index+1)})}" alt="Video">
+                                            </video>
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
 
+                            <div id="videoModal" class="videoModal">
+                                <div class="video-slideshow-container">
+                                    <div th:each="videoid: ${#numbers.sequence(0, videoIDs.size()-1, 1)}">
+                                        <div class="videoSlides">
+                                            <video style="width: 100%; height: 100%;" controls>
+                                                <source th:src="@{/video/{username}/{id}(username=${#authentication.name}, id=${videoIDs.get(videoid)})}" alt="Video">';
+                                            </video>
+                                        </div>
+                                    </div>
+                                    <a class="prev" onclick="plusVideoSlides(-1)">❮</a>
+                                    <a class="next" onclick="plusVideoSlides(1)">❯</a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-
-                <div class="column video">
-                    <a th:if="${showEdit}" th:href="@{/upload}" style="margin-left: 1000px;">
-                        <button class="uploadButton"><i class="fas fa-plus"></i> Upload a new document</button>
-                    </a>
-                    <div class="container">
-                        <div th:each="index: ${#numbers.sequence(0, videoIDs.size()-1, 3)}">
-                            <div class="row row-cols-3">
-
-                                <div class = "col">
-                                    <video width="320" height="240" controls onclick="openVideoModal();">
-                                        <source th:src="@{/video/{username}/{id}(username=${#authentication.name}, id=${videoIDs.get(index)})}" alt="Video">
-                                    </video>
-                                </div>
-
-                                <div class = "col">
-                                    <video th:if="${(index + 1) < videoIDs.size()}" width="320" height="240" controls onclick="openVideoModal();">
-                                        <source th:src="@{/video/{username}/{id}(username=${#authentication.name}, id=${videoIDs.get(index+1)})}" alt="Video">
-                                    </video>
-                                </div>
-
-                                <div class = "col">
-                                    <video th:if="${(index + 2) < videoIDs.size()}" width="320" height="240" controls onclick="openVideoModal();">
-                                        <source th:src="@{/video/{username}/{id}(username=${#authentication.name}, id=${videoIDs.get(index+2)})}" alt="Video">
-                                    </video>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="videoModal" class="videoModal">
-                        <div class="video-slideshow-container">
-                            <div th:each="videoid: ${#numbers.sequence(0, videoIDs.size()-1)}">
-                                <div class="videoSlides">
-                                    <video style="width: 100%; height: 100%;" controls>
-                                        <source th:src="@{/video/{username}/{id}(username=${#authentication.name}, id=${videoIDs.get(videoid)})}" alt="Video">';
-                                    </video>
-                                </div>
-                            </div>
-                            <a class="prev" onclick="plusVideoSlides(-1)">❮</a>
-                            <a class="next" onclick="plusVideoSlides(1)">❯</a>
-                        </div>
-                    </div>
-
-
-                </div>
-
-                <div class="column documents">
-                    <a th:if="${showEdit}" th:href="@{/upload}" style="margin-left: 1000px;">
-                        <button class="uploadButton"><i class="fas fa-plus"></i> Upload a new document</button>
-                    </a>
-                        <p th:each="doc : ${docs}">
-                            <embed th:src="@{/document/{username}/{id}(username=${#authentication.name}, id=${doc.key})}" width="600" height="500" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
-                        </p>
-                </div>
-
-                <div class="column about_me">
-                    <a th:if="${showEdit}" th:href="@{/profile/{username}/edit(username=${#authentication.name})}" style="margin-left: 1000px;">
-                        <button class="uploadButton"><i class="fas fa-plus"></i> Edit your information</button>
-                    </a>
-
-                    <div class="container">
-                        <div class="info_row">
-                            <div class="info_column">
-                                <p class = "userPic">
-                                    <img class="myImg" th:if="${havePic}" th:src="@{/user/{username}/picture(username=${#authentication.name})}">
-                                    <img th:if="!${havePic}" th:src="@{/images/account-img.png}" style="width:100%;">
+                        <div class="column documents">
+                            <div class="container">
+                                <iframe name="iframe_a" height="550px" width="100%" title="Iframe Example"></iframe>
+                                <p th:each="doc : ${docs}">
+                                    <a th:href="@{/document/{username}/{id}(username=${#authentication.name}, id=${doc.key})}" target="iframe_a" th:text="${doc.value}"></a>
                                 </p>
                             </div>
-                            <div class="info_column2">
-                                <p class="title">
-                                <h1 class = "firstName">First Name:</h1>
-                                <h2 th:text="${userInfo?.firstName}"></h2>
-                                <h1 class = "lasttName">Last Name:</h1>
-                                <h2 th:text="${userInfo?.lastName}"></h2>
-                                <h1 class = "contactInfo">Contact Info:</h1>
-                                <h2 th:text="${userInfo?.contactInfo}"></h2>
-                                <h1 class = "location">Location:</h1>
-                                <h2 th:text="${userInfo?.location}"></h2>
-                                <h1 clas = "education">Education:</h1>
-                                <h2 th:text="${userInfo?.education}"></h2>
-                                <h1 class = "workExp">Work Experience:</h1>
-                                <h2 th:text="${userInfo?.workExp}"></h2>
-                                <h1 class = "summary">Summary:</h1>
-                                <h2 th:text="${userInfo?.summary}"></h2>
-                                </p>
-                            </div>
+
                         </div>
+
                     </div>
-
                 </div>
-
-
             </div>
 
-            </div>
+
         </div>
+
+
+
+
+
+
+
+
+
+</div>
+
 
 
 
