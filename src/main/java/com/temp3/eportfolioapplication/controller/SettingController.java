@@ -37,7 +37,6 @@ public class SettingController {
         redirectAttributes.addFlashAttribute("message",
                 "Your settings have been changed");
 
-        System.out.println(currUser.getPrivacy());
 
         return "redirect:/settings";
     }

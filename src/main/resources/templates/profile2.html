@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link th:href="@{/css/profile2.css}" rel="stylesheet" type="text/css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+
+<body>
+    <nav class="navbar sticky-top navbar-expand-lg" style="background-color: #121212">
+
+        <a class="navbar-brand text-white" th:href="@{/hello}">
+            <i class="fas fa-less-than" style="padding: 5px; color:#2474a6"></i>
+        </a>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+
+                <a th:href="@{/settings}">
+                    <i class="fas fa-cog" style="padding: 5px; color:#2474a6"></i>
+                </a>
+
+                <a th:href="@{/home}">
+                    <i class="fas fa-home" style="padding: 5px; color:#2474a6"></i>
+                </a>
+
+
+                <form sec:authorize="isFullyAuthenticated()" th:action="@{/logout}" method="post">
+                    <input type="submit" value="Log out"/>
+                </form>
+
+                <a sec:authorize="isAnonymous()" th:href="@{/login}">
+                    <input type="submit" value="Login"/>
+                </a>
+
+            </div>
+        </div>
+    </nav>
+
+    <div class="main">
+        <div style="text-align: center">
+            <img class="myImg" th:if="${havePic}" th:src="@{/user/{username}/picture(username=${#authentication.name})}" onclick="openModal();">
+            <img class="defaultImg" th:if="!${havePic}" th:src="@{/images/account-img.png}" style="width:150px; height:150px;" onclick="openModal();">
+        </div>
+        <div class="name">
+            <h1 th:text="${userInfo?.firstName}+' '+${userInfo?.lastName}" onclick="openModal();"></h1>
+        </div>
+
+
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+
+                    <div style="text-align: center">
+                        <img class="myImg" th:if="${havePic}" th:src="@{/user/{username}/picture(username=${#authentication.name})}">
+                        <img class="defaultImg" th:if="!${havePic}" th:src="@{/images/account-img.png}" style="width:150px; height:150px;">
+                    </div>
+
+
+                    <div>
+                        <h1 th:text="${userInfo?.firstName}+' '+${userInfo?.lastName}"></h1>
+                        <h1><i class="fas fa-phone-alt"></i> Contact Info</h1>
+                        <p th:text="${userInfo?.contactInfo}"></p>
+                        <h1><i class="fas fa-map-marker-alt"></i> Location</h1>
+                        <p th:text="${userInfo?.location}"></p>
+                        <h1><i class="fas fa-graduation-cap"></i> Education</h1>
+                        <p th:text="${userInfo?.education}"></p>
+                        <h1><i class="fas fa-suitcase"></i> Work Experience</h1>
+                        <p th:text="${userInfo?.workExp}"></p>
+                        <h1><i class="fas fa-paper-plane"></i> Summary</h1>
+                        <div style="text-align: center">
+                            <span th:text="${userInfo?.summary}"></span>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center">
+                        <a th:if="${showEdit}" th:href="@{/profile/{username}/edit(username=${#authentication.name})}">
+                            <button class="uploadButton"><i class="fas fa-plus" style="background-color: #2474a6;"></i> Edit your information</button>
+                        </a>
+                    </div>
+
+
+
+            </div>
+        </div>
+
+
+        <div style="text-align: right">
+            <a th:if="${showEdit}" th:href="@{/upload}">
+                <button class="uploadButton"><i class="fas fa-plus"></i> Upload a new project</button>
+            </a>
+        </div>
+
+        <div class="full">
+            <ul class="hs">
+                <div th:each="index: ${#numbers.sequence(0, projectIDs.size()-1)}">
+                    <li class="item">
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                        <img th:if="${displayIDs.get(index) == 0}" th:src="@{/images/defaultProject.jpg}" width="500" height="350" alt="image">
+                                        <img th:if="${displayIDs.get(index) != 0}"  th:src="@{/display/projects/{username}/{id}(username=${#authentication.name}, id=${displayIDs.get(index)})}" width="500" height="350" alt="image">
+                                </div>
+                                <div class="flip-card-back">
+                                    <p th:text="${projectNames.get(index)}"></p>
+                                    <a th:href="@{/projects/{username}/{id}(username=${username}, id=${projectIDs.get(index)})}">
+                                        <button class="viewButton">View <i class="fas fa-arrow-right"></i></button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                </div>
+            </ul>
+        </div>
+
+
+
+
+
+
+
+    </div>
+
+
+</body>
+
+<script>
+    function openModal() {
+        document.getElementById("myModal").style.display = "block";
+    }
+
+    $(document).mouseup(function(e) {
+        if ($(e.target).parents('.modal-content').length == 0 && !$(e.target).is('.modal-content')) {
+            $('.modal').css('display', 'none');
+        }
+    });
+
+
+</script>
+
+
+
+
+</html>
+
+
+

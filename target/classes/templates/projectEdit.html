@@ -84,7 +84,7 @@
                 <audio th:id="'im-' +  ${index}" controls th:src="@{/audio/{username}/{id}(username=${#authentication.name}, id=${fileIDs.get(index)})}"></audio>
             </div>
             <div th:if="${typeList.get(index) == 'video'}">
-                <video width="100%" controls th:id="'im-' +  ${index}" th:src="@{/video/{username}/{id}(username=${#authentication.name}, id=${fileIDs.get(index)})}">
+                <video width="320" height="240" controls th:id="'im-' +  ${index}" th:src="@{/video/{username}/{id}(username=${#authentication.name}, id=${fileIDs.get(index)})}">
                 </video>
             </div>
             <div th:if="${typeList.get(index) == 'doc'}" >

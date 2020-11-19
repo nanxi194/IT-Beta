@@ -19,7 +19,7 @@
 <body>
 <nav class="navbar sticky-top navbar-expand-lg" style="background-color: #ffffff">
 
-    <a class="navbar-brand text-white" th:href="@{/user/{username}(username=${#authentication.name})}">
+    <a class="navbar-brand text-white" th:href="@{/user/{username}(username=${username})}">
         <i class="fas fa-less-than" style="padding: 5px; color:#2474a6"></i>
     </a>
 
@@ -47,15 +47,18 @@
 
 </nav>
 
+
+<div class="main">
 <p th:text="${projectName}" class="title"></p>
 
-<a th:if="${showEdit}" th:href="@{/projects/edit/{id}(id = ${projectID})}" style="margin-left: 910px;">
-    <button class="uploadButton"><i class="fas fa-plus"></i> Edit your project</button>
-</a>
+<div style="text-align: right">
+    <a th:if="${showEdit}" th:href="@{/projects/edit/{id}(id = ${projectID})}">
+        <button class="uploadButton"><i class="fas fa-plus"></i> Edit your project</button>
+    </a>
+</div>
 
 
-
-<div th:if="${fileIDs.size()} != 0" class="main">
+<div th:if="${fileIDs.size()} != 0">
     <div th:each="index: ${#numbers.sequence(0, fileIDs.size()-1)}">
         <div>
             <div class="row">
@@ -66,7 +69,7 @@
                     <audio controls th:src="@{/audio/{username}/{id}(username=${#authentication.name}, id=${fileIDs.get(index)})}"></audio>
                 </div>
                 <div th:if="${typeList.get(index) == 'video'}" class="column">
-                    <<video width="320" height="240" controls>
+                    <video style="width: 100%; height: 100%;"  controls>
                             <source th:src="@{/video/{username}/{id}(username=${#authentication.name}, id=${fileIDs.get(index)})}">
                     </video>
                 </div>
@@ -80,7 +83,7 @@
         </div>
     </div>
 </div>
-
+</div>
 
 
 

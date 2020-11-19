@@ -28,6 +28,8 @@ public class User {
 
     private String privacy;
 
+    private int template;
+
     @OneToOne(cascade = {CascadeType.ALL})
     private UserInfo userInfo;
 
@@ -46,5 +48,6 @@ public class User {
         this.username = userDto.getUsername();
         this.password = userDto.getPassword();
         this.privacy = "public";
+        this.template = 0;
     }
 }

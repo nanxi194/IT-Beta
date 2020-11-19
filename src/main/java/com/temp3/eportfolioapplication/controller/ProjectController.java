@@ -2,8 +2,10 @@ package com.temp3.eportfolioapplication.controller;
 
 import com.temp3.eportfolioapplication.model.DatabaseFile;
 import com.temp3.eportfolioapplication.model.Project;
+import com.temp3.eportfolioapplication.model.User;
 import com.temp3.eportfolioapplication.repository.DatabaseFileRepository;
 import com.temp3.eportfolioapplication.repository.ProjectRepository;
+import com.temp3.eportfolioapplication.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +26,9 @@ public class ProjectController {
     @Autowired
     DatabaseFileRepository databaseFileRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     List<String> IMAGE_TYPE = new ArrayList<>(Arrays.asList("image/jpeg", "image/jpg", "image/png", "image/gif"));
 
     List<String> AUDIO_TYPE = new ArrayList<>(Arrays.asList("audio/mpeg", "audio/mp4"));
@@ -38,6 +43,8 @@ public class ProjectController {
                                  Principal principal){
 
         Project project = projectRepository.findById(Long.parseLong(id));
+
+        User user = userRepository.findByUsername(username);
 
         Iterable<DatabaseFile> files = databaseFileRepository.findAllByProject(project);
 
@@ -81,6 +88,11 @@ public class ProjectController {
         model.addAttribute("showEdit", showEdit);
         model.addAttribute("username", username);
 
+        if(principal == null || !principal.getName().equals(username)){
+            if(user.getPrivacy().equals("private")){
+                return "redirect:/private";
+            }
+        }
 
         return "project";
     }

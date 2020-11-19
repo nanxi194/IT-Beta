@@ -1,9 +1,6 @@
 * {
-    font-family: Arial;
-}
-
-* {
     box-sizing: border-box;
+    font-family: Arial;
 }
 
 
@@ -11,8 +8,12 @@ body {
     margin: 0;
 }
 
+.main {
+    padding: 30px;
+}
+
+
 a{
-    font-family: Roboto;
     font-style: normal;
     font-weight: normal;
     font-size: 18px;

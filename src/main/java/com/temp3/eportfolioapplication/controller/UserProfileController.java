@@ -59,7 +59,7 @@ public class UserProfileController {
 
         if(principal == null || !principal.getName().equals(username)){
             if(currUser.getPrivacy().equals("private")){
-                return "private";
+                return "redirect:/private";
             }
         }
 
@@ -157,6 +157,9 @@ public class UserProfileController {
 
         model.addAttribute("havePic", havePic);
 
+        if (currUser.getTemplate() == 1){
+            return "profile2";
+        }
         return "profile";
     }
 
