@@ -32,7 +32,7 @@ public class ProfileInformationController {
     public String showProfileEdit(@PathVariable String username, Model model, Principal principal){
 
         if(principal == null || !principal.getName().equals(username)){
-            return "private";
+            return "denied";
         }
 
         UserInfo userInfo = userRepository.findByUsername(username).getUserInfo();

@@ -60,7 +60,7 @@ public class ImageService {
 
     public void writeProfilePicToResponse(String username, HttpServletResponse response) throws IOException {
         response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-        response.setHeader("Cache-Control", "max-age=2628000");
+        response.setHeader("Cache-Control", "no-cache, no-store");
 
         User user = userRepository.findByUsername(username);
 

@@ -89,7 +89,7 @@ public class ProjectEditController {
             return "projectEdit";
         }
 
-        return "private";
+        return "redirect:/denied";
     }
 
     @PostMapping("/projects/edit/{id}")
@@ -130,7 +130,12 @@ public class ProjectEditController {
         }
 
         for(int i = 0; i < fileList.size(); i++){
-            projectEditService.changeFile(fileList.get(i), files[i], descriptions[i]);
+            if (descriptions.length == 0){
+                projectEditService.changeFile(fileList.get(i), files[i], "");
+            }
+            else{
+                projectEditService.changeFile(fileList.get(i), files[i], descriptions[i]);
+            }
         }
 
         if(display.getSize() != 0){
@@ -147,7 +152,13 @@ public class ProjectEditController {
             DatabaseFile currFile;
 
             for (int i = 0; i < newFiles.length; i++){
-                currFile = fileService.storeFile(newFiles[i], principal.getName(), newDescription[i]);
+                if (newDescription.length == 0){
+                    currFile = fileService.storeFile(newFiles[i], principal.getName(), "");
+                }
+                else{
+                    currFile = fileService.storeFile(newFiles[i], principal.getName(), newDescription[i]);
+                }
+
 
                 fileSet.add(currFile);
             }

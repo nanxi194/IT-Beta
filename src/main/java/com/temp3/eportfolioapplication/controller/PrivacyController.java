@@ -11,4 +11,8 @@ public class PrivacyController {
         return "private";
     }
 
+    @GetMapping("/denied")
+    public String showDenied(){
+        return "denied";
+    }
 }

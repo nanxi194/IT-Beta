@@ -57,7 +57,7 @@
                 <div class="info_column">
                     <div class="cardBox">
                         <div style="text-align: center">
-                            <img class="myImg" th:if="${havePic}" th:src="@{/user/{username}/picture(username=${#authentication.name})}">
+                            <img class="myImg" th:if="${havePic}" th:src="@{/user/{username}/picture(username=${username})}">
                             <img th:if="!${havePic}" th:src="@{/images/account-img.png}" style="width:150px; height:150px;">
                         </div>
 

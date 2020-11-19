@@ -77,7 +77,13 @@ public class FileController {
                 throw new FileTooLargeException("");
             }
             if(files[i].getSize() != 0){
-                currFile = fileService.storeFile(files[i], principal.getName(), descriptions[i]);
+                if (descriptions.length == 0){
+                    currFile = fileService.storeFile(files[i], principal.getName(), "");
+                }
+                else{
+                    currFile = fileService.storeFile(files[i], principal.getName(), descriptions[i]);
+                }
+
 
                 fileSet.add(currFile);
 
