@@ -69,13 +69,14 @@
         <div id="box">
             <p>
 
-            <div id="0" onclick="getParentID(this);addRemove();" class="upload-btn-wrapper">
+            <div id="0" onclick="getParentID(this);" class="upload-btn-wrapper">
                 <button class="btn">Upload Your Document</button>
                 <input type="file" name="files" onchange="readURL(this)"/>
             </div>
 
+
             <div class="row1">
-                <span><button class="upload1">Remove <i class="fas fa-times"></i></button></span>
+
                 <div class="column1" id="c-0">
                     <img id="im-0" width="100%" th:src="@{images/fileBackground.png}">
                 </div>
@@ -86,6 +87,7 @@
 
             </div>
             </p>
+
         </div>
 
         <input type="button" value="Add File" onclick="addFile();addRemove();" />
@@ -103,7 +105,7 @@
 
         $('#submitButton').click(function() {
             location.reload();
-            $('body').append('<div id="loading"><img id="loading-image" src="https://media.giphy.com/media/54Y3bemAMQTpWzozrX/giphy.gif" alt="Loading..." /><br>submitted successfully</br></div>');
+            $('body').append('<div id="loading"><img id="loading-image" src="https://media.giphy.com/media/KG4PMQ0jyimywxNt8i/giphy.gif" alt="Loading..." /><br>submitted successfully</br></div>');
             $(window).on('load', function(){
                 setTimeout(removeLoader, 2000);
             });
@@ -136,8 +138,8 @@
         html +=  ' <button class="btn">Upload Your Document</button>';
         html +=  '<input type="file" name="files" onchange="readURL(this)"/>';
         html +=  '</div>';
+        html += '<span style="float:right;"><button class="upload1">Remove <i class="fas fa-times"></i></button></span>';
         html += '<div class="row1">';
-        html += '<span><button class="upload1">Remove <i class="fas fa-times"></i></button></span>';
         html +=  '<div class="column1" id="c-'+imageId+'">';
         html += '<img  id="im-'+imageId+'" width="100%" th:src="@{images/fileBackground.png}">';
         html +=  '</div>';
